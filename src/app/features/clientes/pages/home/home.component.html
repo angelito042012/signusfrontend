@@ -1,0 +1,8 @@
+<div class="grid grid-cols-4 gap-4 p-4">
+    <div *ngFor="let p of productos" class="border p-3 rounded shadow">
+        <img [src]="p.imagen" class="w-full h-40 object-cover rounded">
+        <h3 class="text-lg font-semibold mt-2">{{ p.nombre }}</h3>
+        <p class="text-gray-600">{{ p.descripcion }}</p>
+        <span class="text-green-600 font-bold text-xl mt-2 block">S/. {{ p.precio }}</span>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+src/
+├── app/
+│   ├── core/                     # Módulo Core: servicios y lógica compartida
+│   │   ├── guards/               # Guards para rutas
+│   │   ├── interceptors/         # Interceptores HTTP
+│   │   ├── services/             # Servicios globales (auth, API, etc.)
+│   │   ├── models/               # Modelos y tipos compartidos
+│   │   ├── utils/                # Utilidades y helpers
+│   ├── shared/                   # Módulo Shared: componentes y recursos reutilizables
+│   │   ├── components/           # Componentes reutilizables (botones, tablas, etc.)
+│   │   ├── directives/           # Directivas reutilizables
+│   │   ├── pipes/                # Pipes reutilizables
+│   │   └── styles/               # Estilos globales compartidos
+│   ├── features/                 # Módulos por funcionalidad
+│   │   ├── customer/             # Funcionalidades para clientes
+│   │   │   ├── pages/            # Páginas específicas para clientes
+│   │   │   ├── components/       # Componentes específicos para clientes
+│   │   ├── admin/                # Funcionalidades para empleados/administradores
+│   │   │   ├── pages/            # Páginas específicas para administradores
+│   │   │   ├── components/       # Componentes específicos para administradores
+│   │   └── ...                   # Otros módulos de características
+│   ├── layouts/                  # Diseños principales (layouts)
+│   │   ├── customer-layout/      # Layout para clientes
+│   │   ├── admin-layout/         # Layout para administradores
+│   ├── app.component.html        # Componente raíz
+│   ├── app.component.css        # Estilos del componente raíz
+│   ├── app.component.ts          # Lógica del componente raíz
+│   ├── app.routes.ts             # Configuración de rutas principales
+│   └── app.config.ts             # Configuración global de la aplicación
+├── assets/                       # Recursos estáticos (imágenes, fuentes, etc.)
+│   ├── images/                   # Imágenes
+│   ├── icons/                    # Iconos
+│   ├── styles/                   # Estilos globales (CSS/SCSS)
+│   └── ...                       # Otros recursos estáticos
+├── environments/                 # Configuraciones de entorno
+│   ├── environment.ts            # Entorno de desarrollo
+│   └── environment.prod.ts       # Entorno de producción
+├── index.html                    # Archivo HTML principal
+├── main.ts                       # Punto de entrada de la aplicación
+├── styles.css                   # Estilos globales
+└── test/                         # Archivos relacionados con pruebas
+    ├── mocks/                    # Mocks y datos de prueba
+    ├── e2e/                      # Pruebas end-to-end
+    └── unit/                     # Pruebas unitarias
