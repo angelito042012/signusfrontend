@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
+    production: true,
     apiUrl: 'https://signusbackend-167116120987.us-east1.run.app/api'
 };

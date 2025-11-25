@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ProductoService } from '../../../../core/services/producto.service';
-import { Producto } from '../../../../core/models/Producto';
+import { Producto } from '../../../../core/models/Producto'
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-clientes-home',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: './clientes-home.component.html',
+  styleUrl: './clientes-home.component.css'
 })
-export class HomeComponent {
-
+export class ClientesHomeComponent {
   private productoService = inject(ProductoService)
 
   productos: Producto[] = [];
@@ -22,6 +21,4 @@ export class HomeComponent {
       error: (err) => console.error(err)
     });
   }
-
-
 }

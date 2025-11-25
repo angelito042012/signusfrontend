@@ -1,0 +1,18 @@
+<div class="w-60 bg-gray-100 p-4 rounded-lg shadow">
+
+    <h3 class="font-bold mb-3">Categorías</h3>
+
+    <button
+        class="block w-full text-left py-1 hover:text-blue-600"
+        (click)="categoriaSeleccionada.emit(null)">
+        Todas
+    </button>
+
+    <button
+        *ngFor="let cat of categorias"
+        class="block w-full text-left py-1 hover:text-blue-600"
+        (click)="categoriaSeleccionada.emit(cat.idCategoria)">
+        {{ cat.nombre }}
+    </button>
+
+</div>

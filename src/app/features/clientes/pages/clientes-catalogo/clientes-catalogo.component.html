@@ -1,0 +1,12 @@
+<div class="p-6 flex gap-6">
+
+    <app-categoria-filtro
+        [categorias]="categorias"
+        (categoriaSeleccionada)="filtrarPorCategoria($event)">
+    </app-categoria-filtro>
+
+    <app-lista-productos
+        [productos]="productos">
+    </app-lista-productos>
+
+</div>

@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Producto } from '../../core/models/Producto';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment.prod'; //cambiar esto o nose we
+import { environment } from '../../../environments/environment'; //cambiar esto o nose we
+import { CrearProductoRequest } from '../models/requests/CrearProductoRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class ProductoService {
   private http = inject(HttpClient);
 
   private baseUrl = environment.apiUrl + '/productos';
+
+  crearProducto(producto: CrearProductoRequest) {
+    return this.http.post(`${this.baseUrl}/crear`, producto);
+  }
 
   getProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.baseUrl);
