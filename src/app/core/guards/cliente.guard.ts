@@ -15,5 +15,5 @@ export const clienteGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  return router.parseUrl('/cliente/login');
+  return router.parseUrl('/login');
 };

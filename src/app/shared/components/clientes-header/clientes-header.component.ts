@@ -105,6 +105,16 @@ export class ClientesHeaderComponent implements OnInit {
             routerLink: '/perfil',
           },
           {
+            label: 'Ver carrito completo',
+            icon: 'pi pi-shopping-cart',
+            routerLink: '/carrito',
+          },
+          {
+            label: 'Mis Pedidos',
+            icon: 'pi pi-shopping-bag',
+            routerLink: '/pedidos',
+          },
+          {
             label: 'Cerrar Sesión',
             icon: 'pi pi-sign-out',
             command: () => this.auth.logout(),

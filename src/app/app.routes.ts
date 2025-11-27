@@ -27,6 +27,9 @@ import { ProductoDetalleComponent } from './features/clientes/pages/producto-det
 import { ClientesLoginComponent } from './shared/components/clientes-login/clientes-login.component';
 import { ClientesRegistroComponent } from './shared/components/clientes-registro/clientes-registro.component';
 import { ClientesPerfilComponent } from './features/clientes/pages/clientes-perfil/clientes-perfil.component';
+import { ClientesCarritoComponent } from './features/clientes/pages/clientes-carrito/clientes-carrito.component';
+import { ClientesCheckoutComponent } from './features/clientes/pages/clientes-checkout/clientes-checkout.component';
+import { clienteGuard } from './core/guards/cliente.guard';
 
 export const routes: Routes = [
   //Clientes
@@ -37,11 +40,9 @@ export const routes: Routes = [
       { path: '', component: ClientesHomeComponent },
       { path: 'catalogo', component: ClientesCatalogoComponent },
       { path: 'producto/:id', component: ProductoDetalleComponent },
-      { path: 'perfil', component: ClientesPerfilComponent },
-      // en el futuro aquí puedes agregar:
-      // { path: 'producto/:id', component: ProductDetailComponent }
-      // { path: 'carrito', component: CartComponent }
-      // { path: 'perfil', component: PerfilComponent }
+      { path: 'perfil', component: ClientesPerfilComponent, canActivate: [clienteGuard], data: { roles: ['ROLE_CLIENTE'] } },
+      { path: 'carrito', component: ClientesCarritoComponent, canActivate: [clienteGuard], data: { roles: ['ROLE_CLIENTE'] } },
+      { path: 'checkout', component: ClientesCheckoutComponent, canActivate: [clienteGuard], data: { roles: ['ROLE_CLIENTE'] } },
     ],
   },
   {
@@ -151,12 +152,12 @@ export const routes: Routes = [
         component: UsuariosEmpleadosComponent,
         canActivate: [roleGuard],
         data: { roles: ['ROLE_ADMIN'] },
-      }
+      },
     ],
   },
   //Página no encontrada 404
   {
     path: '**',
     component: NotFoundComponent,
-  }
+  },
 ];

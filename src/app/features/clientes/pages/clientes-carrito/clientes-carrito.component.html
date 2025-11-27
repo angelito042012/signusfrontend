@@ -1,0 +1,95 @@
+<div class="container mx-auto py-6">
+
+  <h1 class="text-3xl font-bold mb-4">Mi Carrito</h1>
+
+  <!-- Información del carrito -->
+  <div class="bg-white p-4 rounded shadow mb-6" *ngIf="carrito() as c">
+    <p><strong>ID Carrito:</strong> {{ c.idCarrito }}</p>
+    <p><strong>Última modificación:</strong> {{ c.fechaModificacion | date : 'medium' }}</p>
+    <p><strong>Estado:</strong> {{ c.estado }}</p>
+  </div>
+
+  <!-- Lista de productos -->
+  <p-table [value]="detalles()">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Producto</th>
+        <th>Imagen</th>
+        <th style="text-align: center;">Cantidad</th>
+        <th>Precio Unit.</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-d>
+      <tr>
+        <td>{{ d.producto?.nombre }}</td>
+
+        <td>
+          <img [src]="d.producto?.imagen" alt="{{ d.producto?.nombre }}" class="w-24 h-24 object-cover rounded">
+        </td>
+
+        <td>
+          <div class="flex items-center gap-2 justify-center">
+            <!-- Botón disminuir -->
+            <button
+              pButton
+              icon="pi pi-minus"
+              class="p-button-rounded p-button-sm p-button-danger"
+              [disabled]="d.cantidad <= 1"
+              (click)="updateCantidad(d, d.cantidad - 1)">
+            </button>
+
+            <!-- Cantidad mostrada -->
+            <span class="px-3 py-1 border rounded bg-gray-50">{{ d.cantidad }}</span>
+
+            <!-- Botón aumentar -->
+            <button
+              pButton
+              icon="pi pi-plus"
+              class="p-button-rounded p-button-sm p-button-success"
+              (click)="updateCantidad(d, d.cantidad + 1)">
+            </button>
+          </div>
+        </td>
+
+
+
+        <td>S/. {{ d.precioUnitario }}</td>
+        <td>S/. {{ d.subtotal }}</td>
+
+        <td>
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-danger"
+            (click)="delete(d.idDetalle)">
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <tr>
+        <td colspan="4" class="text-right font-bold">Total:</td>
+        <td class="font-bold">S/. {{ totalPrice() }}</td>
+        <td></td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Botón para proceder al pago -->
+  <div class="text-right mt-4">
+    <button
+      pButton
+      label="Proceder al Pago"
+      icon="pi pi-credit-card"
+      class="p-button-success"
+      [routerLink]="['/checkout']">
+    </button>
+  </div>
+
+</div>
+
+<p-toast></p-toast>

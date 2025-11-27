@@ -48,29 +48,31 @@
 
         <!-- Controles cantidad -->
         <div class="flex items-center gap-2 mt-2">
-          <p-button
+          <button
+            pButton
             icon="pi pi-minus"
-            class="p-button-sm p-button-rounded"
+            class="p-button-sm p-button-rounded p-button-danger"
             [disabled]="d.cantidad === 1"
             (click)="updateCantidad(d, d.cantidad - 1)"
           >
-          </p-button>
+          </button>
 
           <span class="font-medium">{{ d.cantidad }}</span>
 
-          <p-button
+          <button
+            pButton
             icon="pi pi-plus"
-            class="p-button-sm p-button-rounded"
+            class="p-button-sm p-button-rounded p-button-success"
             (click)="updateCantidad(d, d.cantidad + 1)"
           >
-          </p-button>
+          </button>
         </div>
       </div>
 
       <!-- Eliminar -->
-      <p-button class="text-red-600" (click)="delete(d.idDetalle)">
+      <button pButton class="p-button-sm p-button-rounded p-button-danger h-12" (click)="delete(d.idDetalle)">
         <i class="pi pi-trash"></i>
-      </p-button>
+      </button>
     </div>
 
     <!-- Total -->
@@ -78,13 +80,14 @@
       Total: S/. {{ totalPrice() }}
     </div>
 
-    <p-button
-      label="Ir al carrito"
+    <button
+      pButton
+      label="Ver carrito completo"
       icon="pi pi-arrow-right"
       class="w-full p-button-success mt-4"
       routerLink="/carrito"
     >
-    </p-button>
+    </button>
   </div>
 </p-drawer>
 
