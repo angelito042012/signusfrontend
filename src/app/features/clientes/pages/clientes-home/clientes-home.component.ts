@@ -1,24 +1,58 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ProductoService } from '../../../../core/services/producto.service';
-import { Producto } from '../../../../core/models/Producto'
+import { Producto } from '../../../../core/models/Producto';
+
+import { Card } from 'primeng/card';
+import { Button } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+
+import { CarritoService } from '../../../../core/services/carrito.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-clientes-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, Card, Button, ToastModule],
   templateUrl: './clientes-home.component.html',
-  styleUrl: './clientes-home.component.css'
+  styleUrl: './clientes-home.component.css',
+  providers: [ProductoService, MessageService],
 })
-export class ClientesHomeComponent {
-  private productoService = inject(ProductoService)
+export class ClientesHomeComponent implements OnInit {
+  private productoService = inject(ProductoService);
+  private carritoService = inject(CarritoService);
+  private messageService = inject(MessageService);
 
   productos: Producto[] = [];
 
   ngOnInit() {
     this.productoService.getProductos().subscribe({
-      next: (res) => this.productos = res,
-      error: (err) => console.error(err)
+      next: (res) => {
+        this.productos = res;
+      },
+      error: (err) => console.error(err),
     });
+  }
+
+  async agregarAlCarrito(idProducto: number) {
+    try {
+      await this.carritoService.addProducto(idProducto, 1);
+
+      // Mostrar toast
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Producto agregado',
+        detail: 'Se añadió al carrito correctamente',
+        life: 1500,
+      });
+    } catch (e) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'No se pudo agregar al carrito',
+        life: 1500,
+      });
+    }
   }
 }

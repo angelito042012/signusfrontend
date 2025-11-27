@@ -1,1 +1,28 @@
-<p>ventas works!</p>
+<h2 class="text-2xl font-bold mb-4">Listado de Ventas</h2>
+
+<!-- Colocar filtros, o ordenar con sortField="idVenta" -->
+<p-table [value]="ventas" [loading]="loading" [paginator]="true" [rows]="10" class="shadow-md rounded-lg" dataKey="idVenta">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Cliente</th>
+      <th>Vendedor</th>
+      <th>Fecha</th>
+      <th>Canal</th>
+      <th>Total</th>
+      <th>Estado</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-venta>
+    <tr>
+      <td>{{ venta.idVenta }}</td>
+      <td>{{ venta.cliente ? (venta.cliente.nombres + ' ' + venta.cliente.apellidos) : 'N/A' }}</td>
+      <td>{{ venta.vendedor ? (venta.vendedor.nombres + ' ' + venta.vendedor.apellidos) : 'N/A' }}</td>
+      <td>{{ venta.fecha | date:'short' }}</td>
+      <td>{{ venta.canal }}</td>
+      <td>{{ 'S/. ' + (venta.total | number:'1.2-2') }}</td>
+      <td>{{ venta.estado }}</td>
+    </tr>
+  </ng-template>
+</p-table>

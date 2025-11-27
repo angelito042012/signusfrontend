@@ -4,6 +4,7 @@ import { firstValueFrom, map } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { ClienteRegisterRequest } from '../models/requests/ClienteAuthRequest';
 
 type LoginRole = 'cliente' | 'empleado' | 'admin';
 
@@ -95,10 +96,32 @@ export class AuthService {
   }
 
   // --------------------------
+  // REGISTRAR CLIENTE
+  // --------------------------
+
+  async registerCliente(payload: ClienteRegisterRequest): Promise<void> {
+    const url = `${this.base}/register/cliente`;
+
+    const res: any = await firstValueFrom(
+      this.http.post(url, payload)
+    );
+
+    if (res?.token) {
+      this.setToken(res.token);
+      return;
+    }
+
+    throw new Error('No se obtuvo un token del backend');
+  }
+
+
+
+  // --------------------------
   // LOGOUT
   // --------------------------
-  logout(redirect = '/sistema/login') {
+  logout(redirect = '/') {
     this.removeToken();
     this.router.navigateByUrl(redirect);
+    window.location.reload();
   }
 }

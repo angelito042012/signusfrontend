@@ -1,17 +1,17 @@
 import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../../core/services/auth.service';
-import { Router, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-empleados-login',
+  selector: 'app-admin-login',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  templateUrl: './empleados-login.component.html',
-  styleUrl: './empleados-login.component.css'
+  templateUrl: './admin-login.component.html',
+  styleUrl: './admin-login.component.css'
 })
-export class EmpleadosLoginComponent {
+export class AdminLoginComponent {
   private auth = inject(AuthService);
   private router = inject(Router);
 
@@ -25,7 +25,7 @@ export class EmpleadosLoginComponent {
     this.errorMsg = '';
 
     try {
-      await this.auth.login('empleado', {
+      await this.auth.login('admin', {
         email: this.email,
         password: this.password
       });
@@ -33,11 +33,10 @@ export class EmpleadosLoginComponent {
       console.log('TOKEN:', this.auth.getToken());
       console.log('ROLE:', this.auth.getRole());
 
-      // redirige al dashboard del sistema
-      this.router.navigateByUrl('/sistema');
-    } catch (error: any) {
+      this.router.navigateByUrl('/sistema'); // Ruta que tú definas
+    } catch (err) {
       this.errorMsg = 'Credenciales incorrectas';
-      console.error(error);
+      console.error(err);
     }
 
     this.loading = false;

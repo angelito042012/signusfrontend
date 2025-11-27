@@ -1,0 +1,42 @@
+<div *ngIf="producto; else cargando" class="max-w-4xl mx-auto p-6">
+
+  <p-card>
+    <ng-template #header>
+      <img
+        [src]="producto.imagen"
+        alt="Imagen del producto"
+        class="w-full h-80 object-cover rounded"
+      >
+    </ng-template>
+
+    <h1 class="text-3xl font-bold mb-3">{{ producto.nombre }}</h1>
+
+    <p class="text-gray-600 text-lg mb-3">
+      {{ producto.descripcion }}
+    </p>
+
+    <span class="text-green-600 font-bold text-3xl block mb-6">
+      S/. {{ producto.precio }}
+    </span>
+
+    <span *ngIf="inventario"
+          class="text-blue-600 font-semibold block text-xl mt-2">
+      Stock disponible: {{ inventario.stockActual }}
+    </span>
+
+    <!--
+    <p *ngIf="inventario && inventario.stockActual <= inventario.stockMinimo"
+      class="text-red-600 font-bold mt-2">
+      ¡Quedan pocas unidades!
+    </p>
+    -->
+
+
+    <p-button label="Agregar al carrito" icon="pi pi-shopping-cart" class="w-full"></p-button>
+  </p-card>
+
+</div>
+
+<ng-template #cargando>
+  <p class="text-center text-gray-500 text-lg">Cargando producto...</p>
+</ng-template>

@@ -1,12 +1,91 @@
 <header class="bg-white shadow-lg p-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold">Signus Store</h1>
+  <!-- Logo -->
+  <div class="flex items-center gap-2">
+    <i class="pi pi-home text-2xl text-green-600"></i>
+    <h1 class="text-xl font-bold">SIGNUS</h1>
+  </div>
 
-    <nav class="flex gap-4">
-        <a routerLink="/" class="hover:text-blue-600">Inicio</a>
+  <!-- Barra de búsqueda que no se ve -->
+  <div class="flex items-center gap-2">
+    <input
+      pInputText
+      type="text"
+      placeholder="Search..."
+      class="p-inputtext p-component w-64"
+    />
+    <button
+      pButton
+      type="button"
+      icon="pi pi-search"
+      class="p-button-success"
+    ></button>
+  </div>
 
-        <a routerLink="/catalogo" class="hover:text-blue-600">Catálogo</a>
-
-        <a routerLink="/carrito" class="hover:text-blue-600">Carrito</a>
-        <a routerLink="/perfil" class="hover:text-blue-600">Perfil</a>
-    </nav>
+  <p-menubar [model]="items"></p-menubar>
 </header>
+
+<p-drawer
+  [(visible)]="carritoDrawer"
+  position="right"
+  [modal]="true"
+  header="Tu carrito"
+  [style]="{ width: '380px' }"
+>
+  <div *ngIf="detalles().length === 0" class="p-4 text-center text-gray-500">
+    <i class="pi pi-shopping-cart text-4xl"></i>
+    <p class="mt-2">Tu carrito está vacío</p>
+  </div>
+
+  <!-- Lista de productos -->
+  <div class="p-4 space-y-4" *ngIf="detalles().length > 0">
+    <div *ngFor="let d of detalles()" class="flex gap-3 border-b pb-3">
+      <!-- Imagen -->
+      <img [src]="d.producto?.imagen" class="w-16 h-16 object-cover rounded" />
+
+      <div class="flex-1">
+        <h3 class="font-semibold">{{ d.producto?.nombre }}</h3>
+        <p class="text-gray-500 text-sm">S/. {{ d.producto?.precio }}</p>
+
+        <!-- Controles cantidad -->
+        <div class="flex items-center gap-2 mt-2">
+          <p-button
+            icon="pi pi-minus"
+            class="p-button-sm p-button-rounded"
+            [disabled]="d.cantidad === 1"
+            (click)="updateCantidad(d, d.cantidad - 1)"
+          >
+          </p-button>
+
+          <span class="font-medium">{{ d.cantidad }}</span>
+
+          <p-button
+            icon="pi pi-plus"
+            class="p-button-sm p-button-rounded"
+            (click)="updateCantidad(d, d.cantidad + 1)"
+          >
+          </p-button>
+        </div>
+      </div>
+
+      <!-- Eliminar -->
+      <p-button class="text-red-600" (click)="delete(d.idDetalle)">
+        <i class="pi pi-trash"></i>
+      </p-button>
+    </div>
+
+    <!-- Total -->
+    <div class="text-right text-lg font-bold mt-4">
+      Total: S/. {{ totalPrice() }}
+    </div>
+
+    <p-button
+      label="Ir al carrito"
+      icon="pi pi-arrow-right"
+      class="w-full p-button-success mt-4"
+      routerLink="/carrito"
+    >
+    </p-button>
+  </div>
+</p-drawer>
+
+<p-toast></p-toast>

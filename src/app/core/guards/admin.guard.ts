@@ -7,6 +7,8 @@ export const adminGuard: CanActivateFn = (route, state) => {
   /**
    * Admins: ROLE_ADMIN
    */
+
+  //este guard solo funciona por si hay rutas exclusivas para admin, que no son accesibles para empleados
   const auth = inject(AuthService);
   const router = inject(Router);
 

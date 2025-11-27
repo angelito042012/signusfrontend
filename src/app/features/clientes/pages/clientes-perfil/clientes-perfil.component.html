@@ -1,0 +1,45 @@
+<div class="max-w-2xl mx-auto mt-10">
+
+  <p-card *ngIf="cliente()">
+
+    <ng-template pTemplate="header">
+      <h2 class="text-2xl font-bold">Mi Perfil</h2>
+    </ng-template>
+
+    <!-- Nombre -->
+    <div class="mb-4">
+      <label class="font-semibold">Nombres</label>
+      <input pInputText class="w-full mt-1" [value]="cliente()?.nombres" readonly />
+    </div>
+
+    <!-- Apellidos -->
+    <div class="mb-4">
+      <label class="font-semibold">Apellidos</label>
+      <input pInputText class="w-full mt-1" [value]="cliente()?.apellidos" readonly />
+    </div>
+
+    <!-- Email -->
+    <div class="mb-4">
+      <label class="font-semibold">Correo</label>
+      <input pInputText class="w-full mt-1" [value]="cliente()?.usuarioCliente?.email" readonly />
+    </div>
+
+    <!-- Teléfono -->
+    <div class="mb-4">
+      <label class="font-semibold">Teléfono</label>
+      <input pInputText class="w-full mt-1" [value]="cliente()?.telefono" readonly />
+    </div>
+
+    <!-- Dirección -->
+    <div class="mb-4">
+      <label class="font-semibold">Dirección</label>
+      <input pInputText class="w-full mt-1" [value]="cliente()?.direccion" readonly />
+    </div>
+
+    <ng-template pTemplate="footer">
+      <button pButton label="Editar Perfil" icon="pi pi-user-edit" class="p-button-primary w-full"></button>
+    </ng-template>
+
+  </p-card>
+
+</div>

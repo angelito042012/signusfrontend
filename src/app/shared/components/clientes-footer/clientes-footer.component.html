@@ -1,3 +1,68 @@
 <footer class="bg-gray-900 text-white text-center p-4">
-    © 2025 Signus Store
+  <div
+    class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left"
+  >
+    <!-- Información de la empresa -->
+    <div>
+      <h2 class="text-lg font-bold">SIGNUS®</h2>
+    </div>
+
+    <!-- Tienda -->
+    <div>
+      <h2 class="text-lg font-bold">TIENDA</h2>
+      <ul class="mt-2 space-y-2">
+        <li>
+          <a routerLink="/productos" class="hover:text-blue-400">Productos</a>
+        </li>
+
+        <li>
+          <a routerLink="/catalogo" class="hover:text-blue-400"
+            >Catálogo de productos</a
+          >
+        </li>
+
+        <li>
+          <a routerLink="/perfil" class="hover:text-blue-400"
+            >Ver perfil</a
+          >
+        </li>
+
+      </ul>
+    </div>
+
+    <!-- Sistema interno -->
+    <div>
+      <h2 class="text-lg font-bold">SISTEMA</h2>
+      <ul class="mt-2 space-y-2">
+        <li>
+          <a routerLink="/sistema/login" class="hover:text-blue-400"
+            ><i class="pi pi-shield mr-2"></i>Acceder</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Contacto -->
+    <div>
+      <h2 class="text-lg font-bold">CONTACTO</h2>
+      <ul class="mt-2 space-y-2">
+        <li>
+          <a href="mailto:soporte@signus.com" class="hover:text-blue-400"
+            ><i class="pi pi-envelope mr-2"></i>soporte&#64;signus.com</a
+          >
+        </li>
+        <li>
+          <a href="tel:+51987654321" class="hover:text-blue-400"
+            ><i class="pi pi-phone mr-2"></i>+51 987654321</a
+          >
+        </li>
+        <li><i class="pi pi-map-marker mr-2"></i>Lima, Perú</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="text-center mt-8 text-sm">
+    Copyright © SIGNUS 2025. Todos los derechos reservados.
+  </div>
 </footer>

@@ -12,26 +12,24 @@ import { AuthService } from '../../../core/services/auth.service';
   standalone: true,
   imports: [CommonModule, RouterModule, PanelMenuModule, PanelMenu],
   templateUrl: './empleados-menu.component.html',
-  styleUrl: './empleados-menu.component.css'
+  styleUrl: './empleados-menu.component.css',
 })
 export class EmpleadosMenuComponent implements OnInit {
-
   private auth = inject(AuthService);
 
   items: MenuItem[] = [];
   role: string | null = null;
 
   ngOnInit(): void {
-      this.role = this.auth.getRole();
+    this.role = this.auth.getRole();
 
-      this.items = this.getMenuByRole(this.role);
+    this.items = this.getMenuByRole(this.role);
   }
 
   // ---------------------------
   // MENÚ DINÁMICO POR ROL
   // ---------------------------
   getMenuByRole(role: string | null): MenuItem[] {
-
     // ADMIN → acceso total
     if (role === 'ROLE_ADMIN') {
       return this.adminMenu();
@@ -62,49 +60,105 @@ export class EmpleadosMenuComponent implements OnInit {
 
   private ventasMenu(): MenuItem[] {
     return [
-      { label: 'Dashboard', icon: 'pi pi-chart-bar', routerLink: '/sistema/home' },
+      {
+        label: 'Dashboard',
+        icon: 'pi pi-chart-bar',
+        routerLink: '/sistema/home',
+      },
 
       {
         label: 'Ventas',
         icon: 'pi pi-shopping-cart',
         items: [
-          { label: 'Listado de ventas', icon: 'pi pi-list', routerLink: '/sistema/ventas' },
-        ]
+          {
+            label: 'Listado de ventas',
+            icon: 'pi pi-list',
+            routerLink: '/sistema/ventas',
+          },
+        ],
       },
 
       {
         label: 'Clientes',
         icon: 'pi pi-users',
-        routerLink: '/sistema/clientes'
-      }
+        routerLink: '/sistema/clientes',
+      },
+
+      {
+        label: 'Cerrar Sesión',
+        icon: 'pi pi-sign-out',
+        command: () => this.auth.logout(),
+      },
     ];
   }
 
   private almacenMenu(): MenuItem[] {
     return [
-      { label: 'Dashboard', icon: 'pi pi-chart-bar', routerLink: '/sistema/home' },
+      {
+        label: 'Dashboard',
+        icon: 'pi pi-chart-bar',
+        routerLink: '/sistema/home',
+      },
+
+      {
+        label: 'Productos',
+        icon: 'pi pi-tags',
+        items: [
+          {
+            label: 'Productos',
+            icon: 'pi pi-box',
+            routerLink: '/sistema/productos',
+          },
+        ],
+      },
 
       {
         label: 'Inventario',
         icon: 'pi pi-box',
         items: [
-          { label: 'Inventario general', icon: 'pi pi-database', routerLink: '/sistema/inventario' },
-          { label: 'Operaciones', icon: 'pi pi-cog', routerLink: '/sistema/inventario/operaciones' },
-          { label: 'Movimientos', icon: 'pi pi-sync', routerLink: '/sistema/inventario/movimientos' },
-          { label: 'Pedidos', icon: 'pi pi-truck', routerLink: '/sistema/inventario/pedidos' }
-        ]
-      }
+          {
+            label: 'Inventario general',
+            icon: 'pi pi-database',
+            routerLink: '/sistema/inventario',
+          },
+          {
+            label: 'Operaciones',
+            icon: 'pi pi-cog',
+            routerLink: '/sistema/operaciones-inventario',
+          },
+          {
+            label: 'Movimientos',
+            icon: 'pi pi-sync',
+            routerLink: '/sistema/movimientos-inventario',
+          },
+        ],
+      },
+      {
+        label: 'Cerrar Sesión',
+        icon: 'pi pi-sign-out',
+        iconStyle: { 'color': 'red' },
+        command: () => this.auth.logout(),
+      },
     ];
   }
 
   private pedidosMenu(): MenuItem[] {
     return [
-      { label: 'Dashboard', icon: 'pi pi-chart-bar', routerLink: '/sistema/home' },
+      {
+        label: 'Dashboard',
+        icon: 'pi pi-chart-bar',
+        routerLink: '/sistema/home',
+      },
       {
         label: 'Pedidos',
         icon: 'pi pi-truck',
-        routerLink: '/sistema/inventario/pedidos'
-      }
+        routerLink: '/sistema/inventario/pedidos',
+      },
+      {
+        label: 'Cerrar Sesión',
+        icon: 'pi pi-sign-out',
+        command: () => this.auth.logout(),
+      },
     ];
   }
 
@@ -116,38 +170,80 @@ export class EmpleadosMenuComponent implements OnInit {
         label: 'Ventas',
         icon: 'pi pi-shopping-cart',
         items: [
-          { label: 'Ventas', icon: 'pi pi-list', routerLink: '/sistema/ventas' },
-          { label: 'Métodos de pago', icon: 'pi pi-credit-card', routerLink: '/sistema/metodos-pago' }
-        ]
+          {
+            label: 'Ventas',
+            icon: 'pi pi-list',
+            routerLink: '/sistema/ventas',
+          },
+          {
+            label: 'Métodos de pago',
+            icon: 'pi pi-credit-card',
+            routerLink: '/sistema/metodos-pago',
+          },
+        ],
       },
 
       {
         label: 'Productos',
         icon: 'pi pi-tags',
         items: [
-          { label: 'Productos', icon: 'pi pi-box', routerLink: '/sistema/productos' },
-          { label: 'Categorías', icon: 'pi pi-sitemap', routerLink: '/sistema/categorias' }
-        ]
+          {
+            label: 'Productos',
+            icon: 'pi pi-box',
+            routerLink: '/sistema/productos',
+          },
+          {
+            label: 'Categorías',
+            icon: 'pi pi-sitemap',
+            routerLink: '/sistema/categorias',
+          },
+        ],
       },
 
       {
         label: 'Inventario',
         icon: 'pi pi-database',
         items: [
-          { label: 'Inventario', icon: 'pi pi-database', routerLink: '/sistema/inventario' },
-          { label: 'Operaciones', icon: 'pi pi-cog', routerLink: '/sistema/inventario/operaciones' },
-          { label: 'Movimientos', icon: 'pi pi-sync', routerLink: '/sistema/inventario/movimientos' },
-        ]
+          {
+            label: 'Inventario',
+            icon: 'pi pi-database',
+            routerLink: '/sistema/inventario',
+          },
+          {
+            label: 'Operaciones',
+            icon: 'pi pi-cog',
+            routerLink: '/sistema/inventario/operaciones',
+          },
+          {
+            label: 'Movimientos',
+            icon: 'pi pi-sync',
+            routerLink: '/sistema/inventario/movimientos',
+          },
+        ],
       },
 
       {
         label: 'Usuarios',
         icon: 'pi pi-user',
         items: [
-          { label: 'Empleados', icon: 'pi pi-id-card', routerLink: '/sistema/usuarios/empleados' },
-          { label: 'Clientes', icon: 'pi pi-users', routerLink: '/sistema/usuarios/clientes' }
-        ]
-      }
+          {
+            label: 'Empleados',
+            icon: 'pi pi-id-card',
+            routerLink: '/sistema/usuarios/empleados',
+          },
+          {
+            label: 'Clientes',
+            icon: 'pi pi-users',
+            routerLink: '/sistema/usuarios/clientes',
+          },
+        ],
+      },
+
+      {
+        label: 'Cerrar Sesión',
+        icon: 'pi pi-sign-out',
+        command: () => this.auth.logout(),
+      },
     ];
   }
 }
