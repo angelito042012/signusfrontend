@@ -83,6 +83,8 @@ export class ClientesHeaderComponent implements OnInit {
     ];
   }
 
+
+
   menuInvitado(): MenuItem[] {
     return [
       {
@@ -109,6 +111,11 @@ export class ClientesHeaderComponent implements OnInit {
             icon: 'pi pi-shopping-cart',
             routerLink: '/carrito',
           },
+          /*{
+            label: 'Ver favoritos',
+            icon: 'pi pi-heart',
+            routerLink: '/favoritos',
+          },*/
           {
             label: 'Mis Pedidos',
             icon: 'pi pi-shopping-bag',

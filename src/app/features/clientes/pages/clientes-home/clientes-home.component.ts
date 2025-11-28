@@ -5,7 +5,7 @@ import { ProductoService } from '../../../../core/services/producto.service';
 import { Producto } from '../../../../core/models/Producto';
 
 import { Card } from 'primeng/card';
-import { Button } from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 
 import { CarritoService } from '../../../../core/services/carrito.service';
@@ -14,7 +14,7 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-clientes-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, Card, Button, ToastModule],
+  imports: [CommonModule, RouterLink, Card, ButtonModule, ToastModule],
   templateUrl: './clientes-home.component.html',
   styleUrl: './clientes-home.component.css',
   providers: [ProductoService, MessageService],
@@ -46,6 +46,7 @@ export class ClientesHomeComponent implements OnInit {
         detail: 'Se añadió al carrito correctamente',
         life: 1500,
       });
+      
     } catch (e) {
       this.messageService.add({
         severity: 'error',

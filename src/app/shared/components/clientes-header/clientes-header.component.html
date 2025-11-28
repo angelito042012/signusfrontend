@@ -1,6 +1,6 @@
 <header class="bg-white shadow-lg p-4 flex justify-between items-center">
   <!-- Logo -->
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-2 cursor-pointer" routerLink="/">
     <i class="pi pi-home text-2xl text-green-600"></i>
     <h1 class="text-xl font-bold">SIGNUS</h1>
   </div>
@@ -86,6 +86,7 @@
       icon="pi pi-arrow-right"
       class="w-full p-button-success mt-4"
       routerLink="/carrito"
+      (click)="carritoDrawer = false"
     >
     </button>
   </div>

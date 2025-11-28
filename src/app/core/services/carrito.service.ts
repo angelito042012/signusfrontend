@@ -132,4 +132,20 @@ export class CarritoService {
     await this.loadDetalles();
   }
 
+  async limpiarCarrito() {
+    const idCarrito = this.carritoId();
+    if (!idCarrito) {
+      console.error("No hay carrito cargado");
+      return;
+    }
+
+    await firstValueFrom(
+      this.http.delete(`${this.base}/${idCarrito}/detalles/eliminar`)
+    );
+
+    // Limpia la data del store reactivo
+    this.detalles.set([]);
+  }
+
+
 }

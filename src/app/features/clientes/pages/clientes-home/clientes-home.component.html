@@ -17,13 +17,14 @@
     <h3 class="text-green-600 font-bold text-xl mt-2">S/. {{ p.precio }}</h3>
 
     <ng-template #footer>
-      <p-button
+      <button
+        pButton
         label="Agregar al carrito"
         icon="pi pi-shopping-cart"
         class="w-full"
 
         (click)="agregarAlCarrito(p.idProducto); $event.stopPropagation()"
-      ></p-button>
+      ></button>
     </ng-template>
 
 

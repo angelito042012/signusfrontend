@@ -212,12 +212,12 @@ export class EmpleadosMenuComponent implements OnInit {
           {
             label: 'Operaciones',
             icon: 'pi pi-cog',
-            routerLink: '/sistema/inventario/operaciones',
+            routerLink: '/sistema/operaciones-inventario',
           },
           {
             label: 'Movimientos',
             icon: 'pi pi-sync',
-            routerLink: '/sistema/inventario/movimientos',
+            routerLink: '/sistema/movimientos-inventario',
           },
         ],
       },
@@ -229,12 +229,12 @@ export class EmpleadosMenuComponent implements OnInit {
           {
             label: 'Empleados',
             icon: 'pi pi-id-card',
-            routerLink: '/sistema/usuarios/empleados',
+            routerLink: '/sistema/usuarios-empleados',
           },
           {
             label: 'Clientes',
             icon: 'pi pi-users',
-            routerLink: '/sistema/usuarios/clientes',
+            routerLink: '/sistema/usuarios-clientes',
           },
         ],
       },

@@ -30,6 +30,7 @@ import { ClientesPerfilComponent } from './features/clientes/pages/clientes-perf
 import { ClientesCarritoComponent } from './features/clientes/pages/clientes-carrito/clientes-carrito.component';
 import { ClientesCheckoutComponent } from './features/clientes/pages/clientes-checkout/clientes-checkout.component';
 import { clienteGuard } from './core/guards/cliente.guard';
+import { ClientesPedidosComponent } from './features/clientes/pages/clientes-pedidos/clientes-pedidos.component';
 
 export const routes: Routes = [
   //Clientes
@@ -43,6 +44,7 @@ export const routes: Routes = [
       { path: 'perfil', component: ClientesPerfilComponent, canActivate: [clienteGuard], data: { roles: ['ROLE_CLIENTE'] } },
       { path: 'carrito', component: ClientesCarritoComponent, canActivate: [clienteGuard], data: { roles: ['ROLE_CLIENTE'] } },
       { path: 'checkout', component: ClientesCheckoutComponent, canActivate: [clienteGuard], data: { roles: ['ROLE_CLIENTE'] } },
+      { path: 'pedidos', component: ClientesPedidosComponent, canActivate: [clienteGuard], data: { roles: ['ROLE_CLIENTE'] } },
     ],
   },
   {

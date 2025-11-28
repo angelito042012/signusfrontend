@@ -1,1 +1,242 @@
-<p>clientes-checkout works!</p>
+<div class="max-w-4xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4">Checkout</h1>
+
+  <!-- DETALLES DEL CARRITO -->
+  <div class="border rounded p-4 mb-6">
+    <h2 class="text-lg font-semibold mb-2">Resumen de compra</h2>
+
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-2 text-left">Producto</th>
+          <th class="p-2">Cant.</th>
+          <th class="p-2">Precio</th>
+          <th class="p-2">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of detalles">
+          <td class="p-2">{{ d.producto?.nombre }}</td>
+          <td class="p-2 text-center">{{ d.cantidad }}</td>
+          <td class="p-2 text-center">S/. {{ d.precioUnitario }}</td>
+          <td class="p-2 text-center font-semibold">S/. {{ d.subtotal }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="text-right text-xl font-bold mt-4">Total: S/. {{ total }}</div>
+  </div>
+
+  <!-- DATOS DEL CLIENTE -->
+  <div class="border rounded p-4 mb-6">
+    <h2 class="text-lg font-semibold mb-2">Datos del cliente</h2>
+
+    <!-- Botón para cargar datos automáticamente -->
+    <button
+      pButton
+      label="Cargar datos del cliente"
+      icon="pi pi-user"
+      class="p-button-secondary my-4"
+      (click)="cargarDatosCliente()"
+    ></button>
+
+    <!-- Inputs para llenar los datos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Nombres -->
+      <div>
+        <label class="block text-sm font-medium">Nombres</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          [(ngModel)]="form.nombres"
+        />
+      </div>
+
+      <!-- Apellidos -->
+      <div>
+        <label class="block text-sm font-medium">Apellidos</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          [(ngModel)]="form.apellidos"
+        />
+      </div>
+
+      <!-- DNI -->
+      <div>
+        <label class="block text-sm font-medium">DNI</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          [(ngModel)]="form.dni"
+        />
+      </div>
+
+      <!-- Teléfono -->
+      <div>
+        <label class="block text-sm font-medium">Teléfono</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          [(ngModel)]="form.telefono"
+        />
+      </div>
+
+      <!-- Dirección -->
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium">Dirección</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          [(ngModel)]="form.direccion"
+        />
+      </div>
+
+      <!-- Departamento -->
+      <div>
+        <label class="block text-sm font-medium">Departamento</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          [(ngModel)]="form.departamento"
+        />
+      </div>
+
+      <!-- Provincia -->
+      <div>
+        <label class="block text-sm font-medium">Provincia</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          [(ngModel)]="form.provincia"
+        />
+      </div>
+
+      <!-- Distrito -->
+      <div>
+        <label class="block text-sm font-medium">Distrito</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          [(ngModel)]="form.distrito"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- SELECCIÓN DE ENVÍO -->
+  <div class="border rounded p-4 mb-6">
+    <h2 class="text-lg font-semibold mb-2">Forma de entrega</h2>
+
+    <div class="grid grid-cols-1 gap-4">
+      <!-- Opción de envío estándar -->
+      <div
+        class="border rounded p-4 flex items-center gap-4 cursor-pointer"
+        [ngClass]="{ 'border-green-500': form.tipoEnvio === 'ESTANDAR' }"
+        (click)="form.tipoEnvio = 'ESTANDAR'"
+      >
+        <p-radioButton
+          name="tipoEnvio"
+          value="ESTANDAR"
+          [(ngModel)]="form.tipoEnvio"
+        ></p-radioButton>
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold">Envío Estándar</h3>
+          <p class="text-sm text-gray-500">Entrega en 3-7 días hábiles</p>
+        </div>
+        <div class="text-right">
+          <p class="text-lg font-bold">Gratis</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATOS DE PAGO -->
+  <div class="border rounded p-4 mb-6">
+    <h2 class="text-lg font-semibold mb-2">Datos de pago</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <!-- Primer Nombre -->
+      <div>
+        <label class="block text-sm font-medium">Nombre</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          [(ngModel)]="formPago.nombre"
+        />
+      </div>
+
+      <!-- Primer Apellido -->
+      <div>
+        <label class="block text-sm font-medium">Apellido</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          [(ngModel)]="formPago.apellido"
+        />
+      </div>
+
+      <!-- Número de tarjeta -->
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium">Número de tarjeta</label>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext w-full"
+          maxlength="16"
+          [(ngModel)]="formPago.numeroTarjeta"
+        />
+      </div>
+
+      <!-- CVV -->
+      <div>
+        <label class="block text-sm font-medium">CVV</label>
+        <input
+          pInputText
+          type="text"
+          maxlength="3"
+          class="p-inputtext w-full"
+          [(ngModel)]="formPago.cvv"
+        />
+      </div>
+
+      <!-- Fecha de vencimiento -->
+      <div>
+        <label class="block text-sm font-medium">Fecha de vencimiento</label>
+        <input
+          pInputText
+          type="text"
+          maxlength="5"
+          class="p-inputtext w-full"
+          placeholder="MM/YY"
+          [(ngModel)]="formPago.fechaVencimiento"
+        />
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <!-- BOTÓN FINAL -->
+  <button
+    pButton
+    label="Confirmar pedido"
+    icon="pi pi-check"
+    class="w-full p-button-success"
+    (click)="confirmarPedido()"
+  ></button>
+</div>
+
+<p-toast></p-toast>
