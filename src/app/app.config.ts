@@ -22,7 +22,8 @@ export const appConfig: ApplicationConfig = {
             cssLayer: {
                 name: 'primeng',
                 order: 'theme, base, primeng'
-            }
+            },
+            colorScheme: 'light'
         }
       }
     })

@@ -31,65 +31,76 @@
   header="Tu carrito"
   [style]="{ width: '380px' }"
 >
-  <div *ngIf="detalles().length === 0" class="p-4 text-center text-gray-500">
-    <i class="pi pi-shopping-cart text-4xl"></i>
-    <p class="mt-2">Tu carrito está vacío</p>
+
+  <!-- Mostrar mensaje si el usuario no está autenticado -->
+  <div *ngIf="!isLogged" class="p-4 text-center text-gray-500">
+    <i class="pi pi-user text-4xl text-yellow-500"></i>
+    <p class="mt-2"> <a routerLink="/login" class="text-green-600 font-medium hover:underline">Inicia sesión</a> para poder ver tu carrito</p>
   </div>
 
-  <!-- Lista de productos -->
-  <div class="p-4 space-y-4" *ngIf="detalles().length > 0">
-    <div *ngFor="let d of detalles()" class="flex gap-3 border-b pb-3">
-      <!-- Imagen -->
-      <img [src]="d.producto?.imagen" class="w-16 h-16 object-cover rounded" />
+  <!-- Mostrar contenido del carrito si el usuario está autenticado -->
+  <div *ngIf="isLogged">
+    <div *ngIf="detalles().length === 0" class="p-4 text-center text-gray-500">
+      <i class="pi pi-shopping-cart text-4xl"></i>
+      <p class="mt-2">Tu carrito está vacío</p>
+    </div>
 
-      <div class="flex-1">
-        <h3 class="font-semibold">{{ d.producto?.nombre }}</h3>
-        <p class="text-gray-500 text-sm">S/. {{ d.producto?.precio }}</p>
+    <!-- Lista de productos -->
+    <div class="p-4 space-y-4" *ngIf="detalles().length > 0">
+      <div *ngFor="let d of detalles()" class="flex gap-3 border-b pb-3">
+        <!-- Imagen -->
+        <img [src]="d.producto?.imagen" class="w-16 h-16 object-cover rounded" />
 
-        <!-- Controles cantidad -->
-        <div class="flex items-center gap-2 mt-2">
-          <button
-            pButton
-            icon="pi pi-minus"
-            class="p-button-sm p-button-rounded p-button-danger"
-            [disabled]="d.cantidad === 1"
-            (click)="updateCantidad(d, d.cantidad - 1)"
-          >
-          </button>
+        <div class="flex-1">
+          <h3 class="font-semibold">{{ d.producto?.nombre }}</h3>
+          <p class="text-gray-500 text-sm">S/. {{ d.producto?.precio }}</p>
 
-          <span class="font-medium">{{ d.cantidad }}</span>
+          <!-- Controles cantidad -->
+          <div class="flex items-center gap-2 mt-2">
+            <button
+              pButton
+              icon="pi pi-minus"
+              class="p-button-sm p-button-rounded p-button-danger"
+              [disabled]="d.cantidad === 1"
+              (click)="updateCantidad(d, d.cantidad - 1)"
+            >
+            </button>
 
-          <button
-            pButton
-            icon="pi pi-plus"
-            class="p-button-sm p-button-rounded p-button-success"
-            (click)="updateCantidad(d, d.cantidad + 1)"
-          >
-          </button>
+            <span class="font-medium">{{ d.cantidad }}</span>
+
+            <button
+              pButton
+              icon="pi pi-plus"
+              class="p-button-sm p-button-rounded p-button-success"
+              (click)="updateCantidad(d, d.cantidad + 1)"
+            >
+            </button>
+          </div>
         </div>
+
+        <!-- Eliminar -->
+        <button pButton class="p-button-sm p-button-rounded p-button-danger h-12" (click)="delete(d.idDetalle)">
+          <i class="pi pi-trash"></i>
+        </button>
       </div>
 
-      <!-- Eliminar -->
-      <button pButton class="p-button-sm p-button-rounded p-button-danger h-12" (click)="delete(d.idDetalle)">
-        <i class="pi pi-trash"></i>
+      <!-- Total -->
+      <div class="text-right text-lg font-bold mt-4">
+        Total: S/. {{ totalPrice() }}
+      </div>
+
+      <button
+        pButton
+        label="Ver carrito completo"
+        icon="pi pi-arrow-right"
+        class="w-full p-button-success mt-4"
+        routerLink="/carrito"
+        (click)="carritoDrawer = false"
+      >
       </button>
     </div>
-
-    <!-- Total -->
-    <div class="text-right text-lg font-bold mt-4">
-      Total: S/. {{ totalPrice() }}
-    </div>
-
-    <button
-      pButton
-      label="Ver carrito completo"
-      icon="pi pi-arrow-right"
-      class="w-full p-button-success mt-4"
-      routerLink="/carrito"
-      (click)="carritoDrawer = false"
-    >
-    </button>
   </div>
+
 </p-drawer>
 
 <p-toast></p-toast>

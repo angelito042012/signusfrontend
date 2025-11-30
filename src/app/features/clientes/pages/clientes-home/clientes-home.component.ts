@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 
 import { CarritoService } from '../../../../core/services/carrito.service';
 import { MessageService } from 'primeng/api';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-clientes-home',
@@ -23,6 +24,7 @@ export class ClientesHomeComponent implements OnInit {
   private productoService = inject(ProductoService);
   private carritoService = inject(CarritoService);
   private messageService = inject(MessageService);
+  private auth = inject(AuthService);
 
   productos: Producto[] = [];
 
@@ -36,6 +38,20 @@ export class ClientesHomeComponent implements OnInit {
   }
 
   async agregarAlCarrito(idProducto: number) {
+    //verificar si el usuario esta autenticadoo
+
+    const isLogged = this.auth.isLogged();
+    if (!isLogged) {
+      // Mostrar mensaje de advertencia
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Debe iniciar sesión',
+        detail: 'Inicie sesión para agregar productos al carrito',
+        life: 2000,
+      });
+      return; // Detener la ejecución si no está autenticado
+    }
+
     try {
       await this.carritoService.addProducto(idProducto, 1);
 
@@ -46,7 +62,7 @@ export class ClientesHomeComponent implements OnInit {
         detail: 'Se añadió al carrito correctamente',
         life: 1500,
       });
-      
+
     } catch (e) {
       this.messageService.add({
         severity: 'error',
