@@ -44,8 +44,8 @@ export class ClientesHeaderComponent implements OnInit {
 
       this.clienteService.obtenerClientePorEmail(email).subscribe({
         next: (res) => {
-          const nombres = res.nombres.split(' ')[0]; // Obtiene el primer nombre
-          const apellidos = res.apellidos.split(' ')[0]; // Obtiene el primer apellido
+          const nombres = res.nombres ? res.nombres.split(' ')[0] : 'Usuario Sin Nombre';
+          const apellidos = res.apellidos ? res.apellidos.split(' ')[0] : '';
           this.nombreUsuario = `${nombres} ${apellidos}`; // Asigna el primer nombre y apellido
           this.cargarMenu();
         },

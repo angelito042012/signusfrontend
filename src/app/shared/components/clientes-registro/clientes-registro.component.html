@@ -1,1 +1,61 @@
-<p>clientes-registro works!</p>
+<!-- Logo y Título Principal -->
+<div class="flex items-center gap-4 justify-center mt-32 mb-8 cursor-pointer" routerLink="/">
+  <i class="pi pi-home text-4xl text-green-600"></i>
+  <h1 class="text-3xl font-extrabold text-gray-800">SIGNUS</h1>
+</div>
+
+<div class="max-w-md mx-auto p-8 shadow-lg bg-white rounded-lg border border-gray-200">
+
+  <!-- Título -->
+  <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Registro</h2>
+
+  <!-- Formulario -->
+  <div class="flex flex-col gap-6">
+
+    <!-- Campo de correo -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+      <input
+        pInputText
+        placeholder="Ingresa tu correo"
+        [(ngModel)]="form.email"
+        class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+    </div>
+
+    <!-- Campo de contraseña -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+      <input
+        pInputText
+        type="password"
+        placeholder="Ingresa tu contraseña"
+        [(ngModel)]="form.password"
+        class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+    </div>
+
+    <!-- Botón de registro -->
+    <button
+      pButton
+      label="Registrarse"
+      class="p-button-success w-full py-3 text-lg"
+      (click)="registrarCliente()"
+      severity="info"
+      [loading]="loading">
+    </button>
+
+    <!-- Mensaje de error -->
+    <p *ngIf="error" class="text-red-600 text-center text-sm">{{ error }}</p>
+
+    <!-- Enlace al login -->
+    <p class="text-center text-sm text-gray-600">
+      ¿Ya tienes una cuenta?
+      <a
+        routerLink="/login"
+        class="text-green-600 font-medium hover:underline">
+        Inicia sesión aquí
+      </a>
+    </p>
+  </div>
+</div>

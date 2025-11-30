@@ -103,12 +103,11 @@ export class AuthService {
     const url = `${this.base}/register/cliente`;
 
     const res: any = await firstValueFrom(
-      this.http.post(url, payload)
+      this.http.post(url, payload, { responseType: 'text' })
     );
 
-    if (res?.token) {
-      this.setToken(res.token);
-      return;
+    if (res.includes('Cliente registrado exitosamente')) {
+      return; // Registro exitoso, no se necesita hacer nada más
     }
 
     throw new Error('No se obtuvo un token del backend');

@@ -1,45 +1,101 @@
 <div class="max-w-2xl mx-auto mt-10">
 
-  <p-card *ngIf="cliente()">
+  <p-card *ngIf="cliente">
 
     <ng-template pTemplate="header">
-      <h2 class="text-2xl font-bold">Mi Perfil</h2>
+      <h2 class="text-2xl mt-3 font-bold text-center">Mi Perfil</h2>
     </ng-template>
 
-    <!-- Nombre -->
-    <div class="mb-4">
-      <label class="font-semibold">Nombres</label>
-      <input pInputText class="w-full mt-1" [value]="cliente()?.nombres" readonly />
+    <!-- Indicador de carga -->
+    <div *ngIf="loading" class="flex justify-center items-center py-6">
+      <p-progressSpinner></p-progressSpinner>
     </div>
 
-    <!-- Apellidos -->
-    <div class="mb-4">
-      <label class="font-semibold">Apellidos</label>
-      <input pInputText class="w-full mt-1" [value]="cliente()?.apellidos" readonly />
+    <!-- Formulario -->
+    <div *ngIf="!loading">
+      <!-- Nombre -->
+      <div class="mb-4">
+        <label class="font-semibold">Nombres</label>
+        <input pInputText class="w-full mt-1" [(ngModel)]="cliente.nombres" [disabled]="!editMode" maxlength="50" />
+      </div>
+
+      <!-- Apellidos -->
+      <div class="mb-4">
+        <label class="font-semibold">Apellidos</label>
+        <input pInputText class="w-full mt-1" [(ngModel)]="cliente.apellidos" [disabled]="!editMode" maxlength="50" />
+      </div>
+
+      <!-- DNI -->
+      <div class="mb-4">
+        <label class="font-semibold">DNI</label>
+        <input pInputText class="w-full mt-1" [(ngModel)]="cliente.dni" [disabled]="!editMode" maxlength="8" />
+      </div>
+
+      <!-- Teléfono -->
+      <div class="mb-4">
+        <label class="font-semibold">Teléfono</label>
+        <input pInputText class="w-full mt-1" [(ngModel)]="cliente.telefono" [disabled]="!editMode" maxlength="9" />
+      </div>
+
+      <!-- Dirección -->
+      <div class="mb-4">
+        <label class="font-semibold">Dirección</label>
+        <input pInputText class="w-full mt-1" [(ngModel)]="cliente.direccion" [disabled]="!editMode" maxlength="100" />
+      </div>
+
+      <!-- Departamento -->
+      <div class="mb-4">
+        <label class="font-semibold">Departamento</label>
+        <input pInputText class="w-full mt-1" [(ngModel)]="cliente.departamento" [disabled]="!editMode" maxlength="50" />
+      </div>
+
+      <!-- Provincia -->
+      <div class="mb-4">
+        <label class="font-semibold">Provincia</label>
+        <input pInputText class="w-full mt-1" [(ngModel)]="cliente.provincia" [disabled]="!editMode" maxlength="50" />
+      </div>
+
+      <!-- Distrito -->
+      <div class="mb-4">
+        <label class="font-semibold">Distrito</label>
+        <input pInputText class="w-full mt-1" [(ngModel)]="cliente.distrito" [disabled]="!editMode" maxlength="50" />
+      </div>
+
+      <!-- Botón para habilitar edición -->
+      <button
+        *ngIf="!editMode"
+        pButton
+        label="Editar Información"
+        icon="pi pi-pencil"
+        class="p-button-primary w-full"
+        severity="warn"
+        (click)="habilitarEdicion()">
+      </button>
+
+      <!-- Botones para guardar o cancelar cambios -->
+      <div *ngIf="editMode" class="flex gap-4">
+        <button
+          pButton
+          label="Guardar Cambios"
+          icon="pi pi-save"
+          class="p-button-success w-full"
+          [disabled]="loading"
+          (click)="actualizarCliente()">
+        </button>
+        <button
+          pButton
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-secondary w-full"
+          [disabled]="loading"
+          (click)="cancelarEdicion()">
+        </button>
+      </div>
     </div>
 
-    <!-- Email -->
-    <div class="mb-4">
-      <label class="font-semibold">Correo</label>
-      <input pInputText class="w-full mt-1" [value]="cliente()?.usuarioCliente?.email" readonly />
-    </div>
-
-    <!-- Teléfono -->
-    <div class="mb-4">
-      <label class="font-semibold">Teléfono</label>
-      <input pInputText class="w-full mt-1" [value]="cliente()?.telefono" readonly />
-    </div>
-
-    <!-- Dirección -->
-    <div class="mb-4">
-      <label class="font-semibold">Dirección</label>
-      <input pInputText class="w-full mt-1" [value]="cliente()?.direccion" readonly />
-    </div>
-
-    <ng-template pTemplate="footer">
-      <button pButton label="Editar Perfil" icon="pi pi-user-edit" class="p-button-primary w-full"></button>
-    </ng-template>
 
   </p-card>
 
 </div>
+
+<p-toast></p-toast>
