@@ -1,28 +1,128 @@
-<h2 class="text-2xl font-bold mb-4">Listado de Ventas</h2>
-
-<!-- Colocar filtros, o ordenar con sortField="idVenta" -->
-<p-table [value]="ventas" [loading]="loading" [paginator]="true" [rows]="10" class="shadow-md rounded-lg" dataKey="idVenta">
+<p-card class="shadow-lg">
   <ng-template pTemplate="header">
-    <tr>
-      <th>ID</th>
-      <th>Cliente</th>
-      <th>Vendedor</th>
-      <th>Fecha</th>
-      <th>Canal</th>
-      <th>Total</th>
-      <th>Estado</th>
-    </tr>
+    <h2 class="text-xl font-bold text-gray-800">Ventas</h2>
   </ng-template>
 
-  <ng-template pTemplate="body" let-venta>
-    <tr>
-      <td>{{ venta.idVenta }}</td>
-      <td>{{ venta.cliente ? (venta.cliente.nombres + ' ' + venta.cliente.apellidos) : 'N/A' }}</td>
-      <td>{{ venta.vendedor ? (venta.vendedor.nombres + ' ' + venta.vendedor.apellidos) : 'N/A' }}</td>
-      <td>{{ venta.fecha | date:'short' }}</td>
-      <td>{{ venta.canal }}</td>
-      <td>{{ 'S/. ' + (venta.total | number:'1.2-2') }}</td>
-      <td>{{ venta.estado }}</td>
-    </tr>
-  </ng-template>
-</p-table>
+  <!-- Colocar filtros, o ordenar con sortField="idVenta" -->
+  <p-table
+    [value]="ventas"
+    [loading]="loading"
+    [paginator]="true"
+    [rows]="10"
+    class="shadow-md rounded-lg"
+    dataKey="idVenta"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Vendedor</th>
+        <th>Fecha</th>
+        <th>Canal</th>
+        <th>Total</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-venta>
+      <tr>
+        <td>{{ venta.idVenta }}</td>
+        <td>
+          {{
+            venta.cliente
+              ? venta.cliente.nombres + " " + venta.cliente.apellidos
+              : "Cliente Sin Nombres"
+          }}
+        </td>
+        <td>
+          {{
+            venta.vendedor
+              ? venta.vendedor.nombres + " " + venta.vendedor.apellidos
+              : "SISTEMA"
+          }}
+        </td>
+        <td>{{ venta.fecha | date : "short" }}</td>
+        <td>{{ venta.canal }}</td>
+        <td>{{ "S/. " + (venta.total | number : "1.2-2") }}</td>
+        <td>{{ venta.estado }}</td>
+        <td>
+          <button
+            pButton
+            type="button"
+            label="Ver Detalles"
+            class="p-button-info p-button-sm"
+            (click)="verDetalles(venta.idVenta)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8" class="text-center">No hay ventas disponibles.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<!-- Diálogo para mostrar detalles de la venta -->
+<p-dialog
+  [(visible)]="mostrarDetalles"
+  header="Detalles de la Venta"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [style]="{ width: '50vw' }"
+>
+  <div *ngIf="ventaSeleccionada">
+    <p><strong>ID Venta:</strong> {{ ventaSeleccionada.idVenta }}</p>
+    <p>
+      <strong>Cliente:</strong>
+      {{
+        ventaSeleccionada.cliente?.nombres &&
+        ventaSeleccionada.cliente?.apellidos
+          ? ventaSeleccionada.cliente?.nombres +
+            " " +
+            ventaSeleccionada.cliente?.apellidos
+          : "Cliente Sin Nombres"
+      }}
+    </p>
+    <p>
+      <strong>Fecha:</strong>
+      {{ ventaSeleccionada.fecha | date : "dd/MM/yyyy" }}
+    </p>
+    <p>
+      <strong>Total:</strong> {{ ventaSeleccionada.total | currency : "S/. " }}
+    </p>
+
+    <h3 class="text-lg font-bold mt-4">Detalles</h3>
+    <table class="w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-300 px-4 py-2">Producto</th>
+          <th class="border border-gray-300 px-4 py-2">Cantidad</th>
+          <th class="border border-gray-300 px-4 py-2">Precio</th>
+          <th class="border border-gray-300 px-4 py-2">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detalle of detalles">
+          <td class="border border-gray-300 px-4 py-2">
+            {{ detalle.producto?.nombre }}
+          </td>
+          <td class="border border-gray-300 px-4 py-2">
+            {{ detalle.cantidad }}
+          </td>
+          <td class="border border-gray-300 px-4 py-2">
+            {{ detalle.precioUnitario | currency : "S/. " }}
+          </td>
+          <td class="border border-gray-300 px-4 py-2">
+            {{ detalle.cantidad * detalle.precioUnitario | currency : "S/. " }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</p-dialog>
+
+<p-toast></p-toast>

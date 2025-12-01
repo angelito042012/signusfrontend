@@ -1,5 +1,33 @@
-<h1 class="text-2xl font-bold mb-4">Bienvenido al Sistema</h1>
+<p-card class="shadow-lg max-w-xl mx-auto">
+  <ng-template pTemplate="header">
+    <h2 class="text-xl font-bold text-gray-800">Información del Empleado</h2>
+  </ng-template>
 
-<p class="mb-4 text-gray-700">
-  Aquí podrás administrar productos, ventas, clientes y más.
-</p>
+  <div *ngIf="empleadoActual; else cargando" class="space-y-4">
+    <p>
+      <strong>Nombre:</strong> {{ empleadoActual.nombres }}
+      {{ empleadoActual.apellidos }}
+    </p>
+    <p><strong>DNI:</strong> {{ empleadoActual.dni }}</p>
+    <p><strong>Rol:</strong> {{ empleadoActual.rol }}</p>
+    <p><strong>Email:</strong> {{ empleadoActual.usuarioEmpleado?.email }}</p>
+    <p>
+      <strong>Teléfono:</strong>
+      {{ empleadoActual.telefono || "No disponible" }}
+    </p>
+    <p>
+      <strong>Fecha de Registro:</strong>
+      {{
+        empleadoActual.usuarioEmpleado?.fechaRegistro
+          ? (empleadoActual.usuarioEmpleado?.fechaRegistro
+            | date : "dd/MM/yyyy")
+          : "No disponible"
+      }}
+    </p>
+    <p><strong>Estado:</strong> {{ empleadoActual.usuarioEmpleado?.estado }}</p>
+  </div>
+
+  <ng-template #cargando>
+    <p>Cargando información del empleado...</p>
+  </ng-template>
+</p-card>

@@ -1,71 +1,37 @@
-<div class="max-w-xl mx-auto p-6">
-  <h2 class="text-2xl font-bold mb-6">Crear Producto</h2>
+<p-card class="shadow-lg">
+  <ng-template pTemplate="header">
+    <h2 class="text-xl font-bold text-gray-800">Lista de Productos</h2>
+  </ng-template>
 
-  <form (ngSubmit)="crear()">
-
-    <label class="font-semibold">Nombre</label>
-    <input
-      type="text"
-      [(ngModel)]="nombre"
-      name="nombre"
-      class="border p-2 w-full mb-4"
-      required
-    />
-
-    <label class="font-semibold">Descripción</label>
-    <textarea
-      [(ngModel)]="descripcion"
-      name="descripcion"
-      class="border p-2 w-full mb-4"
-      required
-    ></textarea>
-
-    <label class="font-semibold">Precio</label>
-    <input
-      type="number"
-      [(ngModel)]="precio"
-      name="precio"
-      class="border p-2 w-full mb-4"
-      required
-    />
-
-    <label class="font-semibold">Estado</label>
-    <select
-      [(ngModel)]="estado"
-      name="estado"
-      class="border p-2 w-full mb-4"
-      required
-    >
-      <option [ngValue]="true">Activo</option>
-      <option [ngValue]="false">Inactivo</option>
-    </select>
-
-    <label class="font-semibold">Imagen</label>
-    <input
-      type="file"
-      (change)="onFile($event)"
-      class="mb-4"
-      accept="image/*"
-    />
-
-    <select
-      [(ngModel)]="categoriaSeleccionadaId"
-      name="categoria"
-      class="border p-2 w-full mb-4"
-      required
-    >
-      <option [ngValue]="null" disabled>Seleccione una categoría</option>
-      <option *ngFor="let c of categorias" [ngValue]="c.idCategoria">
-        {{ c.nombre }}
-      </option>
-    </select>
-
-    <button
-      type="submit"
-      class="bg-blue-600 text-white px-4 py-2 rounded"
-    >
-      Crear Producto
-    </button>
-
-  </form>
-</div>
+  <!-- Tabla de productos -->
+  <p-table
+    [value]="productos"
+    [loading]="loading"
+    [paginator]="true"
+    [rows]="10"
+    [responsiveLayout]="'scroll'"
+    class="mt-4"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-producto>
+      <tr>
+        <td>{{ producto.idProducto }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.categoria?.nombre || 'Sin categoría' }}</td>
+        <td>{{ producto.precio | currency:'S/. ':'symbol':'1.2-2' }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6" class="text-center">No hay productos disponibles.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

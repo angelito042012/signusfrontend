@@ -1,1 +1,35 @@
-<p>categorias works!</p>
+<p-card class="shadow-lg">
+  <ng-template pTemplate="header">
+    <h2 class="text-xl font-bold text-gray-800">Categorías</h2>
+  </ng-template>
+
+  <!-- Tabla de categorías -->
+  <p-table
+    [value]="categorias"
+    [paginator]="true"
+    [rows]="5"
+    [loading]="loading"
+    [responsiveLayout]="'scroll'"
+    class="mt-4"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID Categoría</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-categoria>
+      <tr>
+        <td>{{ categoria.idCategoria }}</td>
+        <td>{{ categoria.nombre }}</td>
+        <td>{{ categoria.descripcion }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="3" class="text-center">No hay categorías disponibles.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

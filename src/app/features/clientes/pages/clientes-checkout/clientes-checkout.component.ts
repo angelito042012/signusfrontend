@@ -16,6 +16,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-clientes-checkout',
@@ -27,6 +28,7 @@ import { Router } from '@angular/router';
     InputTextModule,
     RadioButtonModule,
     ToastModule,
+    ProgressSpinnerModule,
   ],
   templateUrl: './clientes-checkout.component.html',
   styleUrl: './clientes-checkout.component.css',
@@ -69,10 +71,15 @@ export class ClientesCheckoutComponent implements OnInit {
     metodo: 'TARJETA', // por defecto
   };
 
+  loading = true; // Indicador de carga
+  clienteStatus: 'completo' | 'parcial' | 'incompleto' = 'incompleto'; // Estado de los datos del cliente
+
   async ngOnInit() {
     await this.loadCliente();
     await this.loadCarritoDetalles();
     this.buildPedido();
+    this.checkClienteStatus();
+    this.loading = false;
   }
 
   // -----------------------------
@@ -103,7 +110,15 @@ export class ClientesCheckoutComponent implements OnInit {
   // CARGAR DATOS DEL CLIENTE EN EL FORM
   // -----------------------------
   cargarDatosCliente() {
-    if (!this.cliente) return;
+    if (!this.cliente) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Datos no encontrados',
+        detail: 'No se encontraron datos del cliente.',
+        life: 3000,
+      });
+      return;
+    }
 
     this.form.nombres = this.cliente.nombres;
     this.form.apellidos = this.cliente.apellidos;
@@ -114,6 +129,51 @@ export class ClientesCheckoutComponent implements OnInit {
     this.form.departamento = this.cliente.departamento;
     this.form.provincia = this.cliente.provincia;
     this.form.distrito = this.cliente.distrito;
+
+    // Verificar el estado de los datos del cliente
+    this.checkClienteStatus();
+
+    // Mostrar mensaje acorde al estado del cliente
+    if (this.clienteStatus === 'completo') {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Datos completos',
+        detail: 'Se cargaron todos los datos del cliente.',
+        life: 3000,
+      });
+    } else if (this.clienteStatus === 'parcial') {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Datos incompletos',
+        detail: 'Se cargaron algunos datos del cliente. Por favor, completa los datos faltantes.',
+        life: 3000,
+      });
+    } else if (this.clienteStatus === 'incompleto') {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Datos no encontrados',
+        detail: 'No se encontraron datos del cliente.',
+        life: 3000,
+      });
+    }
+  }
+
+  // -----------------------------
+  // VERIFICAR ESTADO DE LOS DATOS DEL CLIENTE
+  // -----------------------------
+  checkClienteStatus() {
+    if (!this.cliente) {
+      this.clienteStatus = 'incompleto';
+      return;
+    }
+
+    const { nombres, apellidos, dni, telefono, direccion, departamento, provincia, distrito } = this.cliente;
+
+    if (nombres && apellidos && dni && telefono && direccion && departamento && provincia && distrito) {
+      this.clienteStatus = 'completo';
+    } else {
+      this.clienteStatus = 'parcial';
+    }
   }
 
   // -----------------------------
@@ -142,6 +202,29 @@ export class ClientesCheckoutComponent implements OnInit {
   // ACCIÓN FINAL (AÚN SIN ENDPOINT)
   // -----------------------------
   async confirmarPedido() {
+
+    // Validar datos de envío
+    if (!this.validarDatosEnvio()) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Datos de envío incompletos',
+        detail: 'Por favor, complete correctamente todos los campos de envío antes de confirmar el pedido.',
+        life: 3000,
+      });
+      return;
+    }
+
+    // Validar datos de pago
+    if (!this.validarDatosPago()) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Datos de pago incompletos',
+        detail: 'Por favor, complete todos los campos de pago antes de confirmar el pedido.',
+        life: 3000,
+      });
+      return;
+    }
+
     if (!this.cliente) {
       this.messageService.add({
         severity: 'error',
@@ -195,7 +278,7 @@ export class ClientesCheckoutComponent implements OnInit {
       // 🔄 Redirigir (opcional)
       setTimeout(() => {
         this.router.navigate(['/pedidos']);
-      }, 1800);
+      }, 2400);
     } catch (error) {
       console.error('Error al confirmar el pedido:', error);
 
@@ -206,5 +289,35 @@ export class ClientesCheckoutComponent implements OnInit {
         life: 3500,
       });
     }
+  }
+
+  validarDatosEnvio(): boolean {
+    const { nombres, apellidos, dni, telefono, direccion, departamento, provincia, distrito } = this.form;
+
+    return (
+      nombres.trim() !== '' &&
+      apellidos.trim() !== '' &&
+      dni.trim() !== '' &&
+      telefono.trim() !== '' &&
+      direccion.trim() !== '' &&
+      departamento.trim() !== '' &&
+      provincia.trim() !== '' &&
+      distrito.trim() !== ''
+    );
+  }
+
+  validarDatosPago(): boolean {
+  const { nombre, apellido, numeroTarjeta, cvv, fechaVencimiento } = this.formPago;
+
+    return (
+      nombre.trim() !== '' &&
+      apellido.trim() !== '' &&
+      numeroTarjeta.trim() !== '' &&
+      numeroTarjeta.length === 16 &&
+      cvv.trim() !== '' &&
+      cvv.length === 3 &&
+      fechaVencimiento.trim() !== '' &&
+      !!fechaVencimiento.match(/^\d{2}\/\d{2}$/) // Validar formato MM/YY
+    );
   }
 }

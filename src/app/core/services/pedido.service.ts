@@ -49,8 +49,8 @@ export class PedidoService {
   // ---------------------------------------------------------
   actualizarEstado(idPedido: number, estado: string): Observable<void> {
     return this.http.patch<void>(
-      `${this.baseUrl}/${idPedido}/estado`,
-      { estado }
+      `${this.baseUrl}/${idPedido}/estado?estado=${estado}`,
+      {} // El cuerpo de la solicitud está vacío
     );
   }
 

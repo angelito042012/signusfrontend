@@ -24,7 +24,7 @@ export class VentaService {
     return this.http.get<Venta>(`${this.baseUrl}/${idVenta}`);
   }
 
-  registrarVenta(venta: Omit<Venta, 'idVenta'>) {
+  registrarVentaFisica(venta: Omit<Venta, 'idVenta'>) {
     return this.http.post<Venta>(`${this.baseUrl}/registrar`, venta);
   }
 

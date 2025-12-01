@@ -1,0 +1,183 @@
+<p-card class="shadow-lg">
+  <ng-template pTemplate="header">
+    <h2 class="text-xl font-bold text-gray-800">Registrar Venta Física</h2>
+  </ng-template>
+
+  <form [formGroup]="ventaForm" (ngSubmit)="registrarVenta()" class="space-y-4">
+    <!-- Vendedor -->
+    <div>
+      <label for="idVendedor" class="block text-sm font-medium text-gray-700"
+        >ID Vendedor</label
+      >
+      <input
+        pInputText
+        id="idVendedor"
+        type="number"
+        formControlName="idVendedor"
+        class="w-full p-inputtext"
+        placeholder="ID del vendedor"
+        readonly
+      />
+    </div>
+
+    <!-- Método de Pago -->
+    <div>
+      <label for="idMetodoPago" class="block text-sm font-medium text-gray-700"
+        >Método de Pago</label
+      >
+      <p-select
+        [options]="metodosPago"
+        formControlName="idMetodoPago"
+        optionLabel="nombre"
+        placeholder="Seleccione un método de pago"
+        class="w-full"
+      ></p-select>
+    </div>
+
+    <!-- Canal -->
+    <div>
+      <label for="canal" class="block text-sm font-medium text-gray-700"
+        >Canal</label
+      >
+      <input
+        id="canal"
+        type="text"
+        formControlName="canal"
+        class="w-full p-inputtext"
+        readonly
+      />
+    </div>
+
+    <!-- Total -->
+    <div>
+      <label for="total" class="block text-sm font-medium text-gray-700"
+        >Total</label
+      >
+      <input
+        id="total"
+        type="number"
+        formControlName="total"
+        class="w-full p-inputtext"
+        placeholder="Ingrese el total de la venta"
+      />
+    </div>
+
+    <!-- Detalles -->
+    <div>
+      <h3 class="text-lg font-bold text-gray-800">Detalles de la Venta</h3>
+      <table class="w-full border-collapse border border-gray-300">
+        <!-- Encabezados -->
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border border-gray-300 px-4 py-2 text-left">Producto</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">
+              Precio Unitario
+            </th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Cantidad</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
+          </tr>
+        </thead>
+        <!-- Filas de Detalles -->
+        <tbody formArrayName="detalles">
+          <tr
+            *ngFor="let detalle of detalles.controls; let i = index"
+            [formGroupName]="i"
+            class="hover:bg-gray-50"
+          >
+            <td class="border border-gray-300 px-4 py-2">
+              <input
+                type="text"
+                formControlName="idProducto"
+                placeholder="ID Producto"
+                class="w-full p-inputtext"
+                readonly
+              />
+            </td>
+            <td class="border border-gray-300 px-4 py-2">
+              <input
+                type="number"
+                formControlName="precioUnitario"
+                placeholder="Precio Unitario"
+                class="w-full p-inputtext"
+                readonly
+              />
+            </td>
+            <td class="border border-gray-300 px-4 py-2">
+              <input
+                type="number"
+                formControlName="cantidad"
+                placeholder="Cantidad"
+                class="w-full p-inputtext"
+              />
+            </td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+              <button
+                pButton
+                type="button"
+                class="p-button p-button-danger"
+                (click)="eliminarDetalle(i)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        pButton
+        type="button"
+        class="p-button p-button-secondary mt-2"
+        (click)="agregarDetalle()"
+      >
+        Agregar Detalle
+      </button>
+    </div>
+
+    <!-- Botón para Calcular Total -->
+    <button
+      pButton
+      type="button"
+      class="p-button p-button-info w-full mt-4"
+      (click)="calcularTotal()"
+    >
+      Calcular Total
+    </button>
+
+    <!-- Botón de Registrar -->
+    <button
+      pButton
+      type="submit"
+      class="p-button p-button-success w-full mt-4"
+      (click)="registrarVenta()"
+    >
+      Registrar Venta
+    </button>
+  </form>
+</p-card>
+
+<!-- Modal para seleccionar producto -->
+<p-dialog
+  [(visible)]="mostrarModalProductos"
+  header="Seleccionar Producto"
+  [modal]="true"
+  [closable]="true"
+>
+  <div class="space-y-2">
+    <div *ngFor="let producto of productos" class="flex items-center gap-4">
+      <span class="w-1/2">{{ producto.nombre }}</span>
+      <span class="w-1/4">{{
+        producto.precio | currency : "S/. " : "symbol" : "1.2-2"
+      }}</span>
+      <button
+        pButton
+        type="button"
+        class="p-button p-button-success"
+        (click)="seleccionarProducto(producto)"
+      >
+        Seleccionar
+      </button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-toast></p-toast>

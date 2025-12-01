@@ -1,1 +1,49 @@
-<p>movimientos-inventario works!</p>
+<p-card class="shadow-lg">
+  <ng-template pTemplate="header">
+    <h2 class="text-xl font-bold text-gray-800">Movimientos de Inventario</h2>
+  </ng-template>
+
+  <!-- Tabla de movimientos de inventario -->
+  <p-table
+    [value]="movimientos"
+    [paginator]="true"
+    [rows]="10"
+    [loading]="loading"
+    [responsiveLayout]="'scroll'"
+    class="mt-4"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID Movimiento</th>
+        <th>Encargado</th>
+        <th>Producto</th>
+        <th>Tipo Movimiento</th>
+        <th>Cantidad</th>
+        <th>Stock Anterior</th>
+        <th>Stock Nuevo</th>
+        <th>Fecha Movimiento</th>
+        <th>Motivo</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-movimiento>
+      <tr>
+        <td>{{ movimiento.idMovimiento }}</td>
+        <td>
+          {{ movimiento.encargado ? (movimiento.encargado.nombres + ' ' + movimiento.encargado.apellidos) : 'N/A' }}
+        </td>
+        <td>{{ movimiento.producto?.nombre || 'N/A' }}</td>
+        <td>{{ movimiento.tipoMovimiento }}</td>
+        <td>{{ movimiento.cantidad }}</td>
+        <td>{{ movimiento.stockAnterior }}</td>
+        <td>{{ movimiento.stockNuevo }}</td>
+        <td>{{ movimiento.fechaMovimiento | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ movimiento.motivo }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="9" class="text-center">No hay movimientos de inventario disponibles.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

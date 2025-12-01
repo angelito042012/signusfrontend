@@ -1,0 +1,150 @@
+<p-card class="shadow-lg max-w-4xl mx-auto">
+  <ng-template pTemplate="header">
+    <h2 class="text-2xl font-bold text-gray-800">Registrar Operación de Inventario</h2>
+  </ng-template>
+
+  <form [formGroup]="operacionForm" (ngSubmit)="registrarOperacion()" class="space-y-4">
+    <!-- Encargado -->
+    <div>
+      <label for="idEncargado" class="block text-sm font-medium text-gray-700">ID Encargado</label>
+      <input
+        pInputText
+        id="idEncargado"
+        type="number"
+        formControlName="idEncargado"
+        class="w-full p-inputtext"
+        placeholder="ID del encargado"
+        readonly
+      />
+    </div>
+
+    <!-- Tipo de Operación -->
+    <div>
+      <label for="tipoOperacion" class="block text-sm font-medium text-gray-700">Tipo de Operación</label>
+      <p-select
+        [options]="[
+          { label: 'Entrada', value: 'ENTRADA' },
+          { label: 'Salida', value: 'SALIDA' }
+        ]"
+        formControlName="tipoOperacion"
+        placeholder="Seleccione el tipo de operación"
+        class="w-full"
+      ></p-select>
+    </div>
+
+    <!-- Motivo -->
+    <div>
+      <label for="motivo" class="block text-sm font-medium text-gray-700">Motivo</label>
+      <textarea
+        id="motivo"
+        formControlName="motivo"
+        class="w-full p-inputtextarea"
+        placeholder="Ingrese el motivo de la operación"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <!-- Detalles -->
+    <div>
+      <h3 class="text-lg font-bold text-gray-800">Detalles de la Operación</h3>
+      <table class="w-full border-collapse border border-gray-300">
+        <!-- Encabezados -->
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border border-gray-300 px-4 py-2 text-left">ID Producto</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Cantidad</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
+          </tr>
+        </thead>
+        <!-- Filas de Detalles -->
+        <tbody formArrayName="detalles">
+          <tr
+            *ngFor="let detalle of detalles.controls; let i = index"
+            [formGroupName]="i"
+            class="hover:bg-gray-50"
+          >
+            <td class="border border-gray-300 px-4 py-2">
+              <input
+                type="text"
+                formControlName="productoId"
+                placeholder="ID Producto"
+                class="w-full p-inputtext"
+                readonly
+              />
+            </td>
+            <td class="border border-gray-300 px-4 py-2">
+              <input
+                type="text"
+                formControlName="productoNombre"
+                placeholder="Nombre"
+                class="w-full p-inputtext"
+                readonly
+              />
+            </td>
+            <td class="border border-gray-300 px-4 py-2">
+              <input
+                type="number"
+                formControlName="cantidad"
+                placeholder="Cantidad"
+                class="w-full p-inputtext"
+              />
+            </td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+              <button
+                pButton
+                type="button"
+                class="p-button p-button-danger"
+                (click)="eliminarDetalle(i)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        pButton
+        type="button"
+        class="p-button p-button-secondary mt-2"
+        (click)="agregarDetalle()"
+      >
+        Agregar Detalle
+      </button>
+    </div>
+
+    <!-- Botón de Registrar -->
+    <button
+      pButton
+      type="submit"
+      class="p-button p-button-success w-full mt-4"
+    >
+      Registrar Operación
+    </button>
+  </form>
+</p-card>
+
+<!-- Modal para seleccionar producto -->
+<p-dialog
+  [(visible)]="mostrarModalProductos"
+  header="Seleccionar Producto"
+  [modal]="true"
+  [closable]="true"
+>
+  <div class="space-y-2">
+    <div *ngFor="let producto of productos" class="flex items-center gap-4">
+      <span class="w-1/2">{{ producto.nombre }}</span>
+      <span class="w-1/4">{{ producto.precio | currency:'S/.':'symbol':'1.2-2' }}</span>
+      <button
+        pButton
+        type="button"
+        class="p-button p-button-success"
+        (click)="seleccionarProducto(producto)"
+      >
+        Seleccionar
+      </button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-toast></p-toast>

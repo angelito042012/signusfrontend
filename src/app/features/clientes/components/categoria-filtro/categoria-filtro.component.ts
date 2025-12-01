@@ -12,4 +12,11 @@ import { Categoria } from '../../../../core/models/Categoria';
 export class CategoriaFiltroComponent {
   @Input() categorias: Categoria[] = [];
   @Output() categoriaSeleccionada = new EventEmitter<number | null>();
+
+  categoriaSeleccionadaId: number | null = null; // Estado local para la categoría seleccionada
+
+  seleccionarCategoria(idCategoria: number | null): void {
+    this.categoriaSeleccionadaId = idCategoria; // Actualizar el estado local
+    this.categoriaSeleccionada.emit(idCategoria); // Emitir el evento al padre
+  }
 }

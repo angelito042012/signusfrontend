@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ProductoService } from '../../../../core/services/producto.service';
 import { Producto } from '../../../../core/models/Producto';
 
-import { Card } from 'primeng/card';
+import { Card, CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 
@@ -15,7 +15,7 @@ import { AuthService } from '../../../../core/services/auth.service';
 @Component({
   selector: 'app-clientes-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, Card, ButtonModule, ToastModule],
+  imports: [CommonModule, RouterLink, CardModule, ButtonModule, ToastModule],
   templateUrl: './clientes-home.component.html',
   styleUrl: './clientes-home.component.css',
   providers: [ProductoService, MessageService],

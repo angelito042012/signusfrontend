@@ -61,7 +61,7 @@ export class EmpleadosMenuComponent implements OnInit {
   private ventasMenu(): MenuItem[] {
     return [
       {
-        label: 'Dashboard',
+        label: 'Inicio',
         icon: 'pi pi-chart-bar',
         routerLink: '/sistema/home',
       },
@@ -75,6 +75,11 @@ export class EmpleadosMenuComponent implements OnInit {
             icon: 'pi pi-list',
             routerLink: '/sistema/ventas',
           },
+          {
+            label: 'Registrar venta física',
+            icon: 'pi pi-plus-circle',
+            routerLink: '/sistema/ventas/registrar',
+          }
         ],
       },
 
@@ -87,6 +92,7 @@ export class EmpleadosMenuComponent implements OnInit {
       {
         label: 'Cerrar Sesión',
         icon: 'pi pi-sign-out',
+        iconStyle: { 'color': 'red' },
         command: () => this.auth.logout(),
       },
     ];
@@ -95,7 +101,7 @@ export class EmpleadosMenuComponent implements OnInit {
   private almacenMenu(): MenuItem[] {
     return [
       {
-        label: 'Dashboard',
+        label: 'Inicio',
         icon: 'pi pi-chart-bar',
         routerLink: '/sistema/home',
       },
@@ -105,10 +111,15 @@ export class EmpleadosMenuComponent implements OnInit {
         icon: 'pi pi-tags',
         items: [
           {
-            label: 'Productos',
+            label: 'Lista de productos',
             icon: 'pi pi-box',
             routerLink: '/sistema/productos',
           },
+          {
+            label: 'Registrar producto',
+            icon: 'pi pi-plus-circle',
+            routerLink: '/sistema/productos/registrar',
+          }
         ],
       },
 
@@ -131,6 +142,11 @@ export class EmpleadosMenuComponent implements OnInit {
             icon: 'pi pi-sync',
             routerLink: '/sistema/movimientos-inventario',
           },
+          {
+            label: 'Registrar operación',
+            icon: 'pi pi-plus-circle',
+            routerLink: '/sistema/operaciones-inventario/registrar',
+          },
         ],
       },
       {
@@ -142,10 +158,12 @@ export class EmpleadosMenuComponent implements OnInit {
     ];
   }
 
+
+
   private pedidosMenu(): MenuItem[] {
     return [
       {
-        label: 'Dashboard',
+        label: 'Inicio',
         icon: 'pi pi-chart-bar',
         routerLink: '/sistema/home',
       },
@@ -157,6 +175,7 @@ export class EmpleadosMenuComponent implements OnInit {
       {
         label: 'Cerrar Sesión',
         icon: 'pi pi-sign-out',
+        iconStyle: { 'color': 'red' },
         command: () => this.auth.logout(),
       },
     ];
@@ -164,23 +183,29 @@ export class EmpleadosMenuComponent implements OnInit {
 
   private adminMenu(): MenuItem[] {
     return [
-      { label: 'Dashboard', icon: 'pi pi-home', routerLink: '/sistema/home' },
+      { label: 'Inicio', icon: 'pi pi-home', routerLink: '/sistema/home' },
 
       {
         label: 'Ventas',
         icon: 'pi pi-shopping-cart',
         items: [
           {
-            label: 'Ventas',
+            label: 'Listado de Ventas',
             icon: 'pi pi-list',
             routerLink: '/sistema/ventas',
           },
           {
-            label: 'Métodos de pago',
-            icon: 'pi pi-credit-card',
-            routerLink: '/sistema/metodos-pago',
-          },
+            label: 'Registrar venta física',
+            icon: 'pi pi-plus-circle',
+            routerLink: '/sistema/ventas/registrar',
+          }
         ],
+      },
+
+      {
+        label: 'Métodos de pago',
+        icon: 'pi pi-credit-card',
+        routerLink: '/sistema/metodos-pago',
       },
 
       {
@@ -188,9 +213,14 @@ export class EmpleadosMenuComponent implements OnInit {
         icon: 'pi pi-tags',
         items: [
           {
-            label: 'Productos',
+            label: 'Lista de productos',
             icon: 'pi pi-box',
             routerLink: '/sistema/productos',
+          },
+          {
+            label: 'Registrar producto',
+            icon: 'pi pi-plus-circle',
+            routerLink: '/sistema/productos/registrar',
           },
           {
             label: 'Categorías',
@@ -219,7 +249,18 @@ export class EmpleadosMenuComponent implements OnInit {
             icon: 'pi pi-sync',
             routerLink: '/sistema/movimientos-inventario',
           },
+          {
+            label: 'Registrar operación',
+            icon: 'pi pi-plus-circle',
+            routerLink: '/sistema/operaciones-inventario/registrar',
+          },
         ],
+      },
+
+      {
+        label: 'Pedidos',
+        icon: 'pi pi-truck',
+        routerLink: '/sistema/pedidos',
       },
 
       {
@@ -229,12 +270,12 @@ export class EmpleadosMenuComponent implements OnInit {
           {
             label: 'Empleados',
             icon: 'pi pi-id-card',
-            routerLink: '/sistema/usuarios-empleados',
+            routerLink: '/sistema/empleados',
           },
           {
             label: 'Clientes',
             icon: 'pi pi-users',
-            routerLink: '/sistema/usuarios-clientes',
+            routerLink: '/sistema/clientes',
           },
         ],
       },
@@ -242,6 +283,7 @@ export class EmpleadosMenuComponent implements OnInit {
       {
         label: 'Cerrar Sesión',
         icon: 'pi pi-sign-out',
+        iconStyle: { 'color': 'red' },
         command: () => this.auth.logout(),
       },
     ];

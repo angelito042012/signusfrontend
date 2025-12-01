@@ -1,1 +1,116 @@
-<p>operaciones-inventario works!</p>
+<p-card class="shadow-lg">
+  <ng-template pTemplate="header">
+    <h2 class="text-xl font-bold text-gray-800">Operaciones de Inventario</h2>
+  </ng-template>
+
+  <!-- Tabla de operaciones de inventario -->
+  <p-table
+    [value]="operaciones"
+    [loading]="loading"
+    [paginator]="true"
+    [rows]="5"
+    [loading]="loading"
+    [responsiveLayout]="'scroll'"
+    class="mt-4"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID Operación</th>
+        <th>Tipo de Operación</th>
+        <th>Fecha</th>
+        <th>Encargado</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-operacion>
+      <tr>
+        <td>{{ operacion.idOperacion }}</td>
+        <td>{{ operacion.tipoOperacion }}</td>
+        <td>{{ operacion.fecha | date : "dd/MM/yyyy" }}</td>
+        <td>
+          {{
+            operacion.encargado
+              ? operacion.encargado.nombres +
+                " " +
+                operacion.encargado.apellidos
+              : "N/A"
+          }}
+        </td>
+        <td>
+          <button
+            pButton
+            type="button"
+            label="Ver Detalles"
+            class="p-button-info p-button-sm"
+            (click)="verDetalles(operacion.idOperacion)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="text-center">
+          No hay operaciones de inventario disponibles.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<!-- Modal para mostrar detalles de la operación -->
+<p-dialog
+  [(visible)]="mostrarDetalles"
+  header="Información de la Operación"
+  [modal]="true"
+  [closable]="true"
+  class="custom-dialog"
+>
+  <div *ngIf="operacionSeleccionada" class="p-4">
+    <div class="grid grid-cols-2 gap-4">
+      <p>
+        <strong>ID Operación:</strong> {{ operacionSeleccionada.idOperacion }}
+      </p>
+      <p>
+        <strong>Tipo de Operación:</strong>
+        {{ operacionSeleccionada.tipoOperacion }}
+      </p>
+      <p>
+        <strong>Fecha:</strong>
+        {{ operacionSeleccionada.fecha | date : "dd/MM/yyyy" }}
+      </p>
+      <p>
+        <strong>Encargado:</strong>
+        {{ operacionSeleccionada.encargado.nombres || 'N/A' }}
+        {{ operacionSeleccionada.encargado.apellidos || '' }}
+      </p>
+      <p><strong>Motivo:</strong> {{ operacionSeleccionada.motivo }}</p>
+    </div>
+  </div>
+
+  <h3 class="text-lg font-bold text-gray-800 mt-6 mb-4">
+    Detalles de la Operación
+  </h3>
+  <p-table [value]="detalles" [responsiveLayout]="'scroll'" class="mt-4">
+    <ng-template pTemplate="header">
+      <tr class="bg-gray-100">
+        <th class="px-4 py-2 text-left">ID Producto</th>
+        <th class="px-4 py-2 text-left">Nombre Producto</th>
+        <th class="px-4 py-2 text-left">Cantidad</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-detalle>
+      <tr class="hover:bg-gray-50">
+        <td class="px-4 py-2">{{ detalle.idDetalle }}</td>
+        <td class="px-4 py-2">{{ detalle.producto?.nombre }}</td>
+        <td class="px-4 py-2">{{ detalle.cantidad }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="3" class="text-center py-4">
+          No hay detalles disponibles para esta operación.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-dialog>

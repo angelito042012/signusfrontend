@@ -1,5 +1,5 @@
 export interface MetodoPago {
-    idMetodoPago: string;
+    idMetodoPago: number;
     nombre: string;
     descripcion: string;
 }

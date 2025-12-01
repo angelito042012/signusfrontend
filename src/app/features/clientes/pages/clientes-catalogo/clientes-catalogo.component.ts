@@ -37,10 +37,20 @@ export class ClientesCatalogoComponent implements OnInit {
     this.categoriaSeleccionada = idCategoria;
 
     if (!idCategoria) {
+      // Si no hay categoría seleccionada, cargar todos los productos
       this.cargarProductos();
       return;
     }
 
-    this.productos = this.productos.filter(p => p.categoria?.idCategoria === idCategoria);
+    // Obtener productos filtrados desde el servicio
+    this.productoService.getProductosPorCategoria(idCategoria).subscribe({
+      next: (res) => {
+        this.productos = res; // Actualizar productos con los filtrados
+      },
+      error: (err) => {
+        console.error(`Error al cargar productos de la categoría ${idCategoria}:`, err);
+        this.productos = []; // Vaciar productos en caso de error
+      },
+    });
   }
 }

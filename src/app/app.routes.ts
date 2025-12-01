@@ -16,8 +16,6 @@ import { MovimientosInventarioComponent } from './features/empleados/pages/movim
 import { PedidosComponent } from './features/empleados/pages/pedidos/pedidos.component';
 import { VentasComponent } from './features/empleados/pages/ventas/ventas.component';
 import { EmpleadosComponent } from './features/empleados/pages/empleados/empleados.component';
-import { UsuariosClientesComponent } from './features/empleados/pages/usuarios-clientes/usuarios-clientes.component';
-import { UsuariosEmpleadosComponent } from './features/empleados/pages/usuarios-empleados/usuarios-empleados.component';
 import { MetodosPagoComponent } from './features/empleados/pages/metodos-pago/metodos-pago.component';
 import { ClientesComponent } from './features/empleados/pages/clientes/clientes.component';
 import { AdminLoginComponent } from './features/admin/pages/admin-login/admin-login.component';
@@ -31,6 +29,9 @@ import { ClientesCarritoComponent } from './features/clientes/pages/clientes-car
 import { ClientesCheckoutComponent } from './features/clientes/pages/clientes-checkout/clientes-checkout.component';
 import { clienteGuard } from './core/guards/cliente.guard';
 import { ClientesPedidosComponent } from './features/clientes/pages/clientes-pedidos/clientes-pedidos.component';
+import { RegistrarVentaFisicaComponent } from './features/empleados/pages/registrar-venta-fisica/registrar-venta-fisica.component';
+import { RegistrarProductoComponent } from './features/empleados/pages/registrar-producto/registrar-producto.component';
+import { RegistrarOperacionInventarioComponent } from './features/empleados/pages/registrar-operacion-inventario/registrar-operacion-inventario.component';
 
 export const routes: Routes = [
   //Clientes
@@ -90,6 +91,12 @@ export const routes: Routes = [
         data: { roles: ['ROLE_ADMIN', 'ROLE_ALMACEN'] },
       },
       {
+        path: 'productos/registrar',
+        component: RegistrarProductoComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ROLE_ADMIN', 'ROLE_ALMACEN'] },
+      },
+      {
         path: 'categorias',
         component: CategoriasComponent,
         canActivate: [roleGuard],
@@ -108,6 +115,12 @@ export const routes: Routes = [
         data: { roles: ['ROLE_ADMIN', 'ROLE_ALMACEN'] },
       },
       {
+        path: 'operaciones-inventario/registrar',
+        component: RegistrarOperacionInventarioComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ROLE_ADMIN', 'ROLE_ALMACEN'] },
+      },
+      {
         path: 'movimientos-inventario',
         component: MovimientosInventarioComponent,
         canActivate: [roleGuard],
@@ -116,6 +129,12 @@ export const routes: Routes = [
       {
         path: 'ventas',
         component: VentasComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['ROLE_ADMIN', 'ROLE_VENTAS'] },
+      },
+      {
+        path: 'ventas/registrar',
+        component: RegistrarVentaFisicaComponent,
         canActivate: [roleGuard],
         data: { roles: ['ROLE_ADMIN', 'ROLE_VENTAS'] },
       },
@@ -140,18 +159,6 @@ export const routes: Routes = [
       {
         path: 'empleados',
         component: EmpleadosComponent,
-        canActivate: [roleGuard],
-        data: { roles: ['ROLE_ADMIN'] },
-      },
-      {
-        path: 'usuarios-clientes',
-        component: UsuariosClientesComponent,
-        canActivate: [roleGuard],
-        data: { roles: ['ROLE_ADMIN'] },
-      },
-      {
-        path: 'usuarios-empleados',
-        component: UsuariosEmpleadosComponent,
         canActivate: [roleGuard],
         data: { roles: ['ROLE_ADMIN'] },
       },
