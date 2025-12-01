@@ -44,16 +44,37 @@ export class ClientesHeaderComponent implements OnInit {
 
       this.clienteService.obtenerClientePorEmail(email).subscribe({
         next: (res) => {
-          const nombres = res.nombres ? res.nombres.split(' ')[0] : 'Usuario Sin Nombre';
-          const apellidos = res.apellidos ? res.apellidos.split(' ')[0] : '';
-          this.nombreUsuario = `${nombres} ${apellidos}`; // Asigna el primer nombre y apellido
-          this.cargarMenu();
+          if (res) {
+            const nombres = res.nombres ? res.nombres.split(' ')[0] : 'Usuario Sin Nombre';
+            const apellidos = res.apellidos ? res.apellidos.split(' ')[0] : '';
+            this.nombreUsuario = `${nombres} ${apellidos}`; // Asigna el primer nombre y apellido
+            this.cargarMenu();
+          } else {
+            // Si no se encuentra el usuario, mostrar un mensaje
+            this.mostrarMensajeUsuarioNoEncontrado();
+          }
+        },
+        error: () => {
+          // Si ocurre un error al buscar el usuario, mostrar un mensaje
+          this.mostrarMensajeUsuarioNoEncontrado();
         },
       });
       this.carritoService.loadCarritoFromUser();
     } else {
       this.cargarMenu();
     }
+  }
+
+  mostrarMensajeUsuarioNoEncontrado() {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Usuario no encontrado',
+      detail: 'No se pudo cargar su usuario. Intente cerrar sesión e iniciar nuevamente.',
+      life: 5000,
+    });
+
+    // Opcional: Cargar un menú básico para evitar errores
+    this.cargarMenu();
   }
 
   cargarMenu() {

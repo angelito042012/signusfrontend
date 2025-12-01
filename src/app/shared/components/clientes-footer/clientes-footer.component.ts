@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-clientes-footer',
@@ -9,5 +10,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './clientes-footer.component.css'
 })
 export class ClientesFooterComponent {
-
+  authService = inject(AuthService);
+  cerrarSesion(): void {
+    this.authService.logout(); // Llama al método de cierre de sesión en el servicio de autenticación
+  }
 }
