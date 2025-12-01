@@ -79,7 +79,7 @@ export class EmpleadosMenuComponent implements OnInit {
             label: 'Registrar venta física',
             icon: 'pi pi-plus-circle',
             routerLink: '/sistema/ventas/registrar',
-          }
+          },
         ],
       },
 
@@ -92,7 +92,7 @@ export class EmpleadosMenuComponent implements OnInit {
       {
         label: 'Cerrar Sesión',
         icon: 'pi pi-sign-out',
-        iconStyle: { 'color': 'red' },
+        iconStyle: { color: 'red' },
         command: () => this.auth.logout(),
       },
     ];
@@ -119,16 +119,21 @@ export class EmpleadosMenuComponent implements OnInit {
             label: 'Registrar producto',
             icon: 'pi pi-plus-circle',
             routerLink: '/sistema/productos/registrar',
-          }
+          },
+          {
+            label: 'Categorías',
+            icon: 'pi pi-sitemap',
+            routerLink: '/sistema/categorias',
+          },
         ],
       },
 
       {
         label: 'Inventario',
-        icon: 'pi pi-box',
+        icon: 'pi pi-database',
         items: [
           {
-            label: 'Inventario general',
+            label: 'Inventario',
             icon: 'pi pi-database',
             routerLink: '/sistema/inventario',
           },
@@ -149,16 +154,15 @@ export class EmpleadosMenuComponent implements OnInit {
           },
         ],
       },
+
       {
         label: 'Cerrar Sesión',
         icon: 'pi pi-sign-out',
-        iconStyle: { 'color': 'red' },
+        iconStyle: { color: 'red' },
         command: () => this.auth.logout(),
       },
     ];
   }
-
-
 
   private pedidosMenu(): MenuItem[] {
     return [
@@ -170,12 +174,12 @@ export class EmpleadosMenuComponent implements OnInit {
       {
         label: 'Pedidos',
         icon: 'pi pi-truck',
-        routerLink: '/sistema/inventario/pedidos',
+        routerLink: '/sistema/pedidos',
       },
       {
         label: 'Cerrar Sesión',
         icon: 'pi pi-sign-out',
-        iconStyle: { 'color': 'red' },
+        iconStyle: { color: 'red' },
         command: () => this.auth.logout(),
       },
     ];
@@ -198,7 +202,7 @@ export class EmpleadosMenuComponent implements OnInit {
             label: 'Registrar venta física',
             icon: 'pi pi-plus-circle',
             routerLink: '/sistema/ventas/registrar',
-          }
+          },
         ],
       },
 
@@ -283,7 +287,7 @@ export class EmpleadosMenuComponent implements OnInit {
       {
         label: 'Cerrar Sesión',
         icon: 'pi pi-sign-out',
-        iconStyle: { 'color': 'red' },
+        iconStyle: { color: 'red' },
         command: () => this.auth.logout(),
       },
     ];
